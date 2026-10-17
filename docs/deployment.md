@@ -12,7 +12,7 @@ The `Validate and package static site` workflow runs on main-branch pushes, pull
 4. Packages the exact source commit and independently verifies the resulting archive.
 5. Uploads an artifact named `versetwo-static-site-<full commit SHA>`, retained for 30 days.
 
-The workflow uses read-only repository permissions and verified, full-SHA pins for official actions. It installs Python 3.13, declared in `.python-version`, and no third-party Python packages. It has no server credentials or deployment command. Source delivery, an accepted build and production activation are separate events.
+The workflow uses Ubuntu 24.04, read-only repository permissions and verified, full-SHA pins for official actions. It installs Python 3.13, declared in `.python-version`, and no third-party Python packages. It has no server credentials or deployment command. Source delivery, an accepted build and production activation are separate events.
 
 Repository attributes enforce LF line endings for generated code and pages while disabling conversion for the preserved source packet and binary files. Intentional Markdown hard-break spaces in the unchanged research exports are excluded from whitespace warnings; their exact content hashes remain required by the review-package check.
 
@@ -67,6 +67,10 @@ After activation, compare the full commit in the served `deployment.json` with t
 Production paths, certificates, DNS, ports and ownership remain server-controlled. Do not alter existing A or AAAA records. No production shell access, live service/configuration change, release publication, tag or deployment is performed by this setup. A repository push does not establish that the server has activated the site.
 
 ## Local verification limits
+
+The repository and main branch are pushed. The [first GitHub run](https://github.com/anderson-webops/versetwo.org/actions/runs/39030008432) for `3517223480a72800080dc261ce568efe379b097b` failed before any job steps ran. GitHub reported: “The job was not started because recent account payments have failed or your spending limit needs to be increased.” An organization owner must resolve the account restriction and rerun the workflow. No payment, spending-limit, visibility or runner-access change was made to bypass it.
+
+The local package for that source commit passed independent acceptance and the complete one-commit Git history scan found no secrets. Subsequent handoff-only changes retain the same artifact checks and are packaged against their own exact HEAD. GitHub-hosted validation and artifact upload remain blocked until the account restriction is removed; a successful local build is not reported as a successful GitHub run.
 
 The native checks and seven regression tests pass locally, and `actionlint` accepts the workflow syntax. The guarded Zizmor wrapper reports approved 1.29.0 versus installed 1.31.1; the guarded Ruff wrapper reports approved 0.17.0 versus an unavailable/unknown version. Those checks stopped as required by the local preflight policy. No unguarded bypass or successful security/Python lint result is claimed.
 

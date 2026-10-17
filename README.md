@@ -2,6 +2,8 @@
 
 GitHub deployment setup: the private repository is [anderson-webops/versetwo.org](https://github.com/anderson-webops/versetwo.org). Pushes run validation and build a checked static deployment package for the existing web server. Read [deployment.md](docs/deployment.md) for the artifact, exact-source checks and protected server handoff. This does not activate the public website.
 
+Current blocker: GitHub rejected the first workflow job before execution because of an account payment/spending-limit restriction. Local validation and artifact acceptance pass; GitHub automation needs the account restriction resolved before it can run.
+
 October 16 update: the local site now has ten sourced artist stories and seven original activities. Added Eminem, Rakim, Lupe Fiasco and Doechii, plus a word-and-sound exercise. [Research and source ledger](docs/artist-learning-research-2026-10-16.md) records what was checked and what remains uncertain. The older October 9 handoff describes version 7; this update supersedes its story/activity/print counts.
 
 For a receiving Work chat, start with [next-verse-work-handoff.md](next-verse-work-handoff.md), including its ready-to-paste continuation prompt. The complete review ZIP includes all preserved sources, editable prototype, print materials and review documents. Recent naming/preview exchanges are in [conversation-update-2026-10-09.md](docs/conversation-update-2026-10-09.md). A supported direct chat transition is unavailable here; no new chat is claimed.

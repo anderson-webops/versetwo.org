@@ -6,6 +6,8 @@ The existing website and PDFs are unchanged. Added GitHub CI, a static packaging
 
 The explicit local Gitleaks directory scan completed without findings. It skipped the nested copy of the offline ZIP at the configured archive depth; that duplicate is not part of source delivery. The staged Git source is scanned separately before commit.
 
+Staged-source and initial full-history Gitleaks scans passed. The exact initial committed static artifact passed independent acceptance with 13 public files. The first GitHub run (39030008432) did not execute any project steps: GitHub blocked job startup because recent account payments failed or the spending limit needs increasing. No remote CI pass, GitHub-hosted artifact upload or server activation is claimed. The workflow pins Ubuntu 24.04 to avoid the announced `ubuntu-latest` migration; billing remains an owner action.
+
 ## October 16, 2026 update
 
 Current scope: eight static pages, ten stories, seven activities, a 23-page Letter packet and the unchanged one-page facilitator outline. New research and claim limits are in [artist-learning-research-2026-10-16.md](artist-learning-research-2026-10-16.md). The October 3 record below is historical and its older counts do not describe this increment.
