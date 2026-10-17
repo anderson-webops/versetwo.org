@@ -1,5 +1,9 @@
 # Validation record
 
+## October 17 public repository and hosted CI
+
+Jacob explicitly authorized public GitHub visibility. The repository is now public, and run 39030144180 succeeded on rerun for `2011ad381cda76f69063c5f3f2a2a5b6586c8fa3`, including the seven tests and deployment artifact build/acceptance/upload. This supersedes the billing-blocked status below. Server activation and DNS/configuration remain unchanged. Later commits require their own green run; see GitHub Actions for the exact source identity.
+
 ## October 17, 2026 deployment preparation
 
 The existing website and PDFs are unchanged. Added GitHub CI, a static packaging script, independent archive acceptance, a versioned deployment contract and seven regression tests. Local static checks, the seven tests and workflow syntax validation pass. Guarded Zizmor and Ruff checks stopped on tool-version mismatches; neither is reported as passing. The protected server was not accessed or changed. See [deployment.md](deployment.md) for the exact source/artifact handoff and remaining host onboarding.

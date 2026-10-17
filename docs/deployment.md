@@ -1,6 +1,6 @@
 # GitHub source and existing web-server deployment
 
-Configured October 17, 2026 for `anderson-webops/versetwo.org`. The repository is private. Jacob selected his existing web server as the hosting target. GitHub Pages, containers, a Node service and an application database are not needed for this static site.
+Configured October 17, 2026 for `anderson-webops/versetwo.org`. Jacob subsequently authorized making the repository public, and the visibility change was verified through GitHub. The existing web server remains the hosting target. GitHub Pages, containers, a Node service and an application database are not needed for this static site.
 
 ## GitHub build
 
@@ -27,7 +27,7 @@ The workflow artifact contains:
 
 The tar archive contains `public/`, plus its manifest and contract. Only the eight HTML pages, CSS, favicon, two PDFs and generated `deployment.json` are included in `public/`. All site links are relative, allowing the existing host to choose its URL path. There is no CNAME or DNS configuration in this repository.
 
-Research exports, source code, internal notes, outreach drafts, Git metadata, caches and review ZIPs are not public assets. The independently maintained verifier rejects unexpected archive members, missing pages, symlinks, checksum failures and a different source commit. Serve only the archive's `public/` directory, never the repository root or the full review bundle.
+Research exports, source code, internal notes, outreach drafts, Git metadata, caches and review ZIPs are excluded from the website package. Tracked research, code and notes are visible in the now-public GitHub repository. The independently maintained verifier rejects unexpected archive members, missing pages, symlinks, checksum failures and a different source commit. Serve only the archive's `public/` directory, never the repository root or the full review bundle.
 
 The gzip/tar metadata is normalized, so the same inputs produce identical artifact bytes. Each file's size and SHA-256 are recorded in the manifest. The sidecar checksum covers the exact archive. These integrity checks do not replace obtaining the package from the trusted GitHub repository.
 
@@ -58,7 +58,7 @@ PDFs are checked-in static assets. CI does not re-render them, avoiding an unnec
 
 The versioned `deployment-contract.json` declares a static-directory host capability, its public document root and served identity endpoint. No installed host adapter has been inspected or claimed compatible. The protected server-side system or operator must onboard this new repository using the host's existing paths, ownership, access controls and release policy.
 
-The host should obtain the chosen exact artifact from the private repository, verify its expected source SHA and archive checksum, accept the independent file inventory, and stage it in a new release directory. Existing static hosting can then serve the staged `public/` tree. This is a multi-page site: resolve real files and return 404 for absent paths rather than using an SPA fallback. Standard HTML/CSS/SVG/PDF MIME handling is sufficient.
+The host should obtain the chosen exact artifact from the repository's successful GitHub Actions run, verify its expected source SHA and archive checksum, accept the independent file inventory, and stage it in a new release directory. Existing static hosting can then serve the staged `public/` tree. This is a multi-page site: resolve real files and return 404 for absent paths rather than using an SPA fallback. Standard HTML/CSS/SVG/PDF MIME handling is sufficient.
 
 Activation belongs to the protected server-side system. Preserve the previous accepted artifact and release pointer for rollback; validate the staged bytes after copying and switch atomically only after host checks pass. Do not rebuild the rollback release. Retain accepted artifacts on the server or in an approved immutable release before GitHub's temporary workflow-artifact retention expires.
 
@@ -66,11 +66,13 @@ After activation, compare the full commit in the served `deployment.json` with t
 
 Production paths, certificates, DNS, ports and ownership remain server-controlled. Do not alter existing A or AAAA records. No production shell access, live service/configuration change, release publication, tag or deployment is performed by this setup. A repository push does not establish that the server has activated the site.
 
+## GitHub verification and historical startup failure
+
+The repository and main branch are pushed. After Jacob explicitly authorized public visibility, the [rerun for `2011ad381cda76f69063c5f3f2a2a5b6586c8fa3`](https://github.com/anderson-webops/versetwo.org/actions/runs/39030144180) succeeded. GitHub ran the site checks, all seven deployment tests, exact-commit packaging, independent archive acceptance and artifact upload. Public source visibility is distinct from activating the website on the production server.
+
+The [initial private-repository run](https://github.com/anderson-webops/versetwo.org/actions/runs/39030008432) for `3517223480a72800080dc261ce568efe379b097b` had failed before any job steps because GitHub reported account payment/spending restrictions. That earlier startup failure and the subsequent API rate limit are historical. No payment or spending-limit setting was changed. Future artifacts must still be matched to their exact successful run and source commit; the older green run does not validate a later commit by itself.
+
 ## Local verification limits
-
-The repository and main branch are pushed. The [first GitHub run](https://github.com/anderson-webops/versetwo.org/actions/runs/39030008432) for `3517223480a72800080dc261ce568efe379b097b` failed before any job steps ran. GitHub reported: “The job was not started because recent account payments have failed or your spending limit needs to be increased.” An organization owner must resolve the account restriction and rerun the workflow. No payment, spending-limit, visibility or runner-access change was made to bypass it.
-
-The local package for that source commit passed independent acceptance and the complete one-commit Git history scan found no secrets. Subsequent handoff-only changes retain the same artifact checks and are packaged against their own exact HEAD. GitHub-hosted validation and artifact upload remain blocked until the account restriction is removed; a successful local build is not reported as a successful GitHub run.
 
 The native checks and seven regression tests pass locally, and `actionlint` accepts the workflow syntax. The guarded Zizmor wrapper reports approved 1.29.0 versus installed 1.31.1; the guarded Ruff wrapper reports approved 0.17.0 versus an unavailable/unknown version. Those checks stopped as required by the local preflight policy. No unguarded bypass or successful security/Python lint result is claimed.
 

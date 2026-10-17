@@ -1,8 +1,8 @@
 # Youth music and learning
 
-GitHub deployment setup: the private repository is [anderson-webops/versetwo.org](https://github.com/anderson-webops/versetwo.org). Pushes run validation and build a checked static deployment package for the existing web server. Read [deployment.md](docs/deployment.md) for the artifact, exact-source checks and protected server handoff. This does not activate the public website.
+GitHub deployment setup: the public repository is [anderson-webops/versetwo.org](https://github.com/anderson-webops/versetwo.org). Pushes run validation and build a checked static deployment package for the existing web server. Read [deployment.md](docs/deployment.md) for the artifact, exact-source checks and protected server handoff. This does not activate the public website.
 
-Current blocker: GitHub rejected the first workflow job before execution because of an account payment/spending-limit restriction. Local validation and artifact acceptance pass; GitHub automation needs the account restriction resolved before it can run.
+October 17 update: Jacob authorized public repository visibility. The [CI rerun](https://github.com/anderson-webops/versetwo.org/actions/runs/39030144180) passed after that change, including all seven deployment tests and the artifact build/upload. The earlier private-repository billing failure is historical; no billing settings were changed.
 
 October 16 update: the local site now has ten sourced artist stories and seven original activities. Added Eminem, Rakim, Lupe Fiasco and Doechii, plus a word-and-sound exercise. [Research and source ledger](docs/artist-learning-research-2026-10-16.md) records what was checked and what remains uncertain. The older October 9 handoff describes version 7; this update supersedes its story/activity/print counts.
 

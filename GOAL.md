@@ -10,6 +10,8 @@ Local prototype, evidence reconciliation, review-ready partner and pilot materia
 
 October 17, 2026: Jacob requested GitHub configuration and deployment readiness, then selected the existing web server as the hosting target. This authorizes private source delivery and checked deployment-package preparation. Public activation remains with the protected server-side system. It does not authorize purchases, DNS changes, outreach or youth participation/data collection.
 
+Later October 17: Jacob explicitly instructed making the GitHub repository public and checking CI. Public source visibility is authorized and verified; hosted CI passed on rerun. This does not authorize activating the public website or changing protected server infrastructure.
+
 ## Durable record
 
 Saved here because this environment exposes no dedicated goal feature. Session: 01a0fe34-7846-7387-8818-86dd125bd001, titled Youth music and learning — prototype and pilot. This directory is the fresh project workspace; it does not establish a UI Project grouping.

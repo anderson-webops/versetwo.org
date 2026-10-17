@@ -1,5 +1,7 @@
 # Decision log
 
+2026-10-17 · Jacob explicitly authorized making anderson-webops/versetwo.org public and checking CI. Applied and verified PUBLIC visibility, reran the latest existing workflow, and observed success for source commit 2011ad381cda76f69063c5f3f2a2a5b6586c8fa3. Update current documentation to supersede the earlier private-repository billing blocker. No payment, spending limit, server or DNS changes.
+
 2026-10-17 · Jacob requested GitHub deployment readiness and selected the existing web server. Initialize main, create the private anderson-webops/versetwo.org repository, add read-only CI, package an allowlisted static artifact with exact source identity, hashes and a versioned host contract, and deliver validated source. Keep internal research out of the public artifact. Production activation, installed paths, DNS and certificates remain protected server-side responsibilities. No GitHub Pages deployment is configured.
 
 2026-10-16 · Jacob requested more artist learning/education content, including Eminem's dictionary example. Restored version 7 into the empty versetwo.org workspace. Add four directly sourced process stories (Eminem, Rakim, Lupe Fiasco, Doechii) and one original word-and-sound activity, retaining the original six stories and activities. Preserve historical tense, separate formal credentials from practice/teaching and retain learner choice. Update source notes, print/offline copies and validation. Naming remains open; the scope remains local.
