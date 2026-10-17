@@ -18,7 +18,7 @@ Repository attributes enforce LF line endings for generated code and pages while
 
 ## Deployment files
 
-The workflow artifact contains:
+The workflow artifact and the published `v0.1.0` GitHub release contain:
 
 - `versetwo.org-static.tar.gz`
 - `versetwo.org-static.tar.gz.sha256`
@@ -30,6 +30,8 @@ The tar archive contains `public/`, plus its manifest and contract. Only the eig
 Research exports, source code, internal notes, outreach drafts, Git metadata, caches and review ZIPs are excluded from the website package. Tracked research, code and notes are visible in the now-public GitHub repository. The independently maintained verifier rejects unexpected archive members, missing pages, symlinks, checksum failures and a different source commit. Serve only the archive's `public/` directory, never the repository root or the full review bundle.
 
 The gzip/tar metadata is normalized, so the same inputs produce identical artifact bytes. Each file's size and SHA-256 are recorded in the manifest. The sidecar checksum covers the exact archive. These integrity checks do not replace obtaining the package from the trusted GitHub repository.
+
+The [published `v0.1.0` release](https://github.com/anderson-webops/versetwo.org/releases/tag/v0.1.0) contains all four files for source commit `71857ec7b5fb16f4dfd85bb6976ddf5195a92492`. Its archive SHA-256 is `a8ddf450525b4f841c4107c185a58db23b1f1c836f15b2ae05550e54761c4073`. The [matching workflow run](https://github.com/anderson-webops/versetwo.org/actions/runs/39035507486) succeeded. These published assets are a durable download source; publication alone is not host acceptance or production activation.
 
 ## Reproduce locally
 
@@ -58,13 +60,13 @@ PDFs are checked-in static assets. CI does not re-render them, avoiding an unnec
 
 The versioned `deployment-contract.json` declares a static-directory host capability, its public document root and served identity endpoint. No installed host adapter has been inspected or claimed compatible. The protected server-side system or operator must onboard this new repository using the host's existing paths, ownership, access controls and release policy.
 
-The host should obtain the chosen exact artifact from the repository's successful GitHub Actions run, verify its expected source SHA and archive checksum, accept the independent file inventory, and stage it in a new release directory. Existing static hosting can then serve the staged `public/` tree. This is a multi-page site: resolve real files and return 404 for absent paths rather than using an SPA fallback. Standard HTML/CSS/SVG/PDF MIME handling is sufficient.
+The host should obtain the chosen exact artifact from its GitHub release, confirm the matching successful workflow run, verify its expected source SHA and archive checksum, accept the independent file inventory, and stage it in a new release directory. Existing static hosting can then serve the staged `public/` tree. This is a multi-page site: resolve real files and return 404 for absent paths rather than using an SPA fallback. Standard HTML/CSS/SVG/PDF MIME handling is sufficient.
 
-Activation belongs to the protected server-side system. Preserve the previous accepted artifact and release pointer for rollback; validate the staged bytes after copying and switch atomically only after host checks pass. Do not rebuild the rollback release. Retain accepted artifacts on the server or in an approved immutable release before GitHub's temporary workflow-artifact retention expires.
+Activation belongs to the protected server-side system. Preserve the previous accepted artifact and release pointer for rollback; validate the staged bytes after copying and switch atomically only after host checks pass. Do not rebuild the rollback release. Retain accepted artifacts on the server; the published release also avoids reliance on temporary workflow-artifact retention.
 
 After activation, compare the full commit in the served `deployment.json` with the chosen manifest, and compare served HTML/CSS/PDF bytes against the manifest. Check normal navigation and both retained IPv4 and IPv6 paths. HTML, `deployment.json` and the unversioned `style.css` should revalidate rather than receive long immutable cache lifetimes.
 
-Production paths, certificates, DNS, ports and ownership remain server-controlled. Do not alter existing A or AAAA records. No production shell access, live service/configuration change, release publication, tag or deployment is performed by this setup. A repository push does not establish that the server has activated the site.
+Production paths, certificates, DNS, ports and ownership remain server-controlled. Do not alter existing A or AAAA records. This source workflow performs no production shell access, live service/configuration change or deployment. A repository push or release does not establish that the server has activated the site.
 
 ## GitHub verification and historical startup failure
 
