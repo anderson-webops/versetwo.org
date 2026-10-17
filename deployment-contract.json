@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "application": "versetwo.org",
+  "kind": "static",
+  "source_repository": "anderson-webops/versetwo.org",
+  "artifact": {
+    "format": "tar.gz",
+    "document_root": "public",
+    "inventory": "manifest.json",
+    "checksum": "versetwo.org-static.tar.gz.sha256"
+  },
+  "runtime": {
+    "application_service": null,
+    "containers_required": false,
+    "dependencies": [],
+    "writable_paths": [],
+    "migrations": []
+  },
+  "verification": {
+    "entrypoint": "public/index.html",
+    "served_identity": "deployment.json",
+    "identity_field": "commit",
+    "required_transport": "https"
+  },
+  "host_requirements": {
+    "capability": "static-directory-v1",
+    "atomic_activation": true,
+    "retain_previous_artifact": true,
+    "preserve_existing_ipv4_and_ipv6": true,
+    "configuration_and_ownership": "server-controlled"
+  }
+}

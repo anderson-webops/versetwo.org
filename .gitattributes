@@ -1,0 +1,9 @@
+* text=auto eol=lf
+
+# These are preserved research exports, including intentional Markdown breaks.
+source-packet/** -text whitespace=-blank-at-eol
+
+*.pdf binary
+*.zip binary
+*.png binary
+*.jpg binary

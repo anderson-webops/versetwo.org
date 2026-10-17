@@ -1,0 +1,24 @@
+{
+  "pages": 8,
+  "local_links_and_fragments": "pass",
+  "no_scripts_forms_embeds_or_remote_assets": "pass",
+  "single_h1_and_unique_ids": "pass",
+  "language_title_skip_and_disclosures": "pass",
+  "link_names_heading_order_aria_references": "pass",
+  "all_profiles_activities_week_in_print": "pass",
+  "profiles": 10,
+  "activities": 7,
+  "css_has_no_network_dependencies": "pass",
+  "fictional_budget": "pass",
+  "print_answers_not_collapsed": "pass",
+  "foreground_white_contrast": {
+    "#111a2c": 17.38,
+    "#445269": 7.9,
+    "#174fc4": 7.11,
+    "#bd3e00": 5.45
+  },
+  "web_content_bytes": 110542,
+  "print_pdf_bytes": 97372,
+  "facilitator_pdf_bytes": 15187,
+  "total_prototype_bytes": 223101
+}

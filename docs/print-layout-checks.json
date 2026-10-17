@@ -1,0 +1,20 @@
+{
+  "packet": {
+    "pages": 23,
+    "nonempty_text_boxes": 625,
+    "text_within_page_bounds": "pass",
+    "resource_schemes": [
+      "file",
+      "data"
+    ]
+  },
+  "facilitator": {
+    "pages": 1,
+    "nonempty_text_boxes": 41,
+    "text_within_page_bounds": "pass",
+    "resource_schemes": [
+      "file",
+      "data"
+    ]
+  }
+}
