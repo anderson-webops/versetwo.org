@@ -59,7 +59,7 @@ for name in ("music-practice-packet.pdf", "facilitator-outline.pdf"):
 review = root / "youth-music-learning-review.zip"
 review_members = {}
 with ZipFile(review, "w", ZIP_DEFLATED) as archive:
-    for name in ("next-verse-work-handoff.md", "GOAL.md", "README.md", "REVIEW.md", "OFFLINE.txt", ".gitattributes", ".gitignore", ".python-version", "deployment-contract.json", offline.name):
+    for name in ("next-verse-work-handoff.md", "GOAL.md", "README.md", "REVIEW.md", "OFFLINE.txt", "AGENTS.md", "VERSION", "CHANGELOG.md", ".gitattributes", ".gitignore", ".python-version", "deployment-contract.json", offline.name):
         archive.write(root / name, name)
         review_members[name] = root / name
     for folder in (".github", "docs", "prototype", "scripts", "source-packet", "tests", "output/pdf"):

@@ -3,6 +3,7 @@ name: Validate and package static site
 on:
   push:
     branches: [main]
+    tags: ["v*"]
   pull_request:
   workflow_dispatch:
 
@@ -11,7 +12,7 @@ permissions:
 
 concurrency:
   group: static-site-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.ref_type != 'tag' }}
 
 jobs:
   validate-and-package:
@@ -22,6 +23,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
@@ -31,6 +33,13 @@ jobs:
           python3 scripts/build_prototype.py
           git diff --exit-code -- prototype
           python3 scripts/check_static.py
+          python3 scripts/check_release.py
+      - name: Check annotated release tag, version and source identity
+        if: github.ref_type == 'tag'
+        env:
+          SOURCE_COMMIT: ${{ github.sha }}
+          SOURCE_REF: ${{ github.ref_name }}
+        run: python3 scripts/check_release.py --tag "$SOURCE_REF" --commit "$SOURCE_COMMIT"
       - name: Test deployment boundaries and archive integrity
         run: python3 -m unittest discover -s tests -v
       - name: Build and independently accept the deployment artifact
@@ -40,6 +49,7 @@ jobs:
         run: |
           python3 scripts/build_site.py --commit "$SOURCE_COMMIT" --ref "$SOURCE_REF"
           python3 scripts/verify_site.py build/versetwo.org-static.tar.gz --commit "$SOURCE_COMMIT"
+          python3 scripts/smoke_site.py build/versetwo.org-static.tar.gz --commit "$SOURCE_COMMIT"
       - name: Upload the static deployment package
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
@@ -47,3 +57,57 @@ jobs:
           path: build/
           if-no-files-found: error
           retention-days: 30
+
+  publish-release:
+    if: github.event_name == 'push' && github.ref_type == 'tag'
+    needs: validate-and-package
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      actions: read
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_COMMIT: ${{ github.sha }}
+      SOURCE_REF: ${{ github.ref_name }}
+    steps:
+      - name: Check out exact tagged source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version-file: .python-version
+      - name: Download this run's accepted artifact without rebuilding
+        run: |
+          gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name "versetwo-static-site-$SOURCE_COMMIT" --dir build
+      - name: Recheck release identity and exact deployment files
+        run: |
+          python3 scripts/check_release.py --tag "$SOURCE_REF" --commit "$SOURCE_COMMIT" \
+            --notes-output build/release-notes.md
+          python3 scripts/verify_site.py build/versetwo.org-static.tar.gz \
+            --commit "$SOURCE_COMMIT" --version "${SOURCE_REF#v}"
+          tar -xOf build/versetwo.org-static.tar.gz manifest.json | cmp - build/manifest.json
+          tar -xOf build/versetwo.org-static.tar.gz deployment-contract.json | cmp - build/deployment-contract.json
+      - name: Create draft and upload immutable deployment files
+        run: |
+          gh release create "$SOURCE_REF" --repo "$GITHUB_REPOSITORY" --verify-tag \
+            --title "$SOURCE_REF" --notes-file build/release-notes.md --draft
+          gh release upload "$SOURCE_REF" --repo "$GITHUB_REPOSITORY" \
+            build/versetwo.org-static.tar.gz build/versetwo.org-static.tar.gz.sha256 \
+            build/manifest.json build/deployment-contract.json
+      - name: Download and verify uploaded files before publication
+        run: |
+          gh release download "$SOURCE_REF" --repo "$GITHUB_REPOSITORY" \
+            --dir build/release-downloaded --pattern 'versetwo.org-static.tar.gz*' \
+            --pattern manifest.json --pattern deployment-contract.json
+          for file in versetwo.org-static.tar.gz versetwo.org-static.tar.gz.sha256 manifest.json deployment-contract.json; do
+            cmp "build/$file" "build/release-downloaded/$file"
+          done
+          python3 scripts/verify_site.py build/release-downloaded/versetwo.org-static.tar.gz \
+            --commit "$SOURCE_COMMIT" --version "${SOURCE_REF#v}"
+      - name: Publish verified draft
+        run: gh release edit "$SOURCE_REF" --repo "$GITHUB_REPOSITORY" --draft=false --latest

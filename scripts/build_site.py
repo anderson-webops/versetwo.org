@@ -10,6 +10,8 @@ import re
 import subprocess
 import tarfile
 
+from check_release import VERSION_PATTERN, read_version
+
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_FILES = (
     "index.html", "stories.html", "practice.html", "week.html",
@@ -24,11 +26,15 @@ def json_bytes(value):
     return (json.dumps(value, indent=2, sort_keys=True) + "\n").encode()
 
 
-def build(source, contract_path, destination, commit, ref):
+def build(source, contract_path, destination, commit, ref, version):
     if not re.fullmatch(r"[0-9a-f]{40}", commit):
         raise ValueError("A full lowercase source commit SHA is required")
     if not re.fullmatch(r"[A-Za-z0-9._/+@-]{1,160}", ref):
         raise ValueError("Invalid source ref")
+    if not re.fullmatch(VERSION_PATTERN, version):
+        raise ValueError("Invalid project version")
+    if re.fullmatch(r"v" + VERSION_PATTERN, ref) and ref != f"v{version}":
+        raise ValueError("Version tag differs from project version")
     if contract_path.is_symlink():
         raise ValueError("The deployment contract must be a regular file")
     contract = json.loads(contract_path.read_text())
@@ -42,11 +48,11 @@ def build(source, contract_path, destination, commit, ref):
         payload[f"public/{name}"] = path.read_bytes()
     payload["public/deployment.json"] = json_bytes({
         "commit": commit, "ok": True, "ref": ref,
-        "runtime": "static", "service": "front-end",
+        "runtime": "static", "service": "front-end", "version": version,
     })
     payload["deployment-contract.json"] = json_bytes(contract)
     manifest = {
-        "schema_version": 1, "application": "versetwo.org",
+        "schema_version": 1, "application": "versetwo.org", "version": version,
         "source": {"commit": commit, "ref": ref, "repository": contract["source_repository"]},
         "files": {
             name: {"bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
@@ -81,8 +87,9 @@ def main():
     actual_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     if actual_commit != args.commit:
         raise ValueError("Requested source commit does not match this checkout")
-    subprocess.run(["git", "diff", "--exit-code", "HEAD", "--", "prototype", "deployment-contract.json", "scripts/build_site.py", "scripts/verify_site.py"], cwd=ROOT, check=True)
-    archive = build(ROOT / "prototype", ROOT / "deployment-contract.json", args.output, args.commit, args.ref)
+    if subprocess.check_output(["git", "status", "--porcelain", "--untracked-files=normal"], cwd=ROOT, text=True).strip():
+        raise ValueError("Deployment artifacts require a clean checkout")
+    archive = build(ROOT / "prototype", ROOT / "deployment-contract.json", args.output, args.commit, args.ref, read_version(ROOT))
     print(f"Built {archive}")
 
 

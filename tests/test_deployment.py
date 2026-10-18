@@ -1,6 +1,7 @@
 """Regressions for accidental source publication and corrupted deployable files."""
 
 import hashlib
+import json
 from pathlib import Path
 import sys
 import tarfile
@@ -13,6 +14,7 @@ from build_site import ARCHIVE_NAME, PUBLIC_FILES, build
 from verify_site import verify
 
 COMMIT = "a" * 40
+VERSION = "0.1.1"
 
 
 class DeploymentTests(unittest.TestCase):
@@ -27,8 +29,8 @@ class DeploymentTests(unittest.TestCase):
         for name in PUBLIC_FILES:
             (self.source / name).write_bytes((ROOT / "prototype" / name).read_bytes())
 
-    def build(self, destination="build"):
-        return build(self.source, ROOT / "deployment-contract.json", self.root / destination, COMMIT, "main")
+    def build(self, destination="build", ref="main", version=VERSION):
+        return build(self.source, ROOT / "deployment-contract.json", self.root / destination, COMMIT, ref, version)
 
     def test_exact_archive_is_reproducible_and_accepted(self):
         first, second = self.build("one"), self.build("two")
@@ -61,6 +63,24 @@ class DeploymentTests(unittest.TestCase):
     def test_wrong_source_commit_fails(self):
         with self.assertRaisesRegex(ValueError, "Wrong source identity"):
             verify(self.build(), "b" * 40)
+
+    def test_release_version_and_tag_are_accepted(self):
+        archive = self.build(ref=f"v{VERSION}")
+        self.assertEqual(verify(archive, COMMIT, VERSION)["version"], VERSION)
+        with tarfile.open(archive, "r:gz") as tar:
+            self.assertEqual(json.load(tar.extractfile("public/deployment.json"))["version"], VERSION)
+
+    def test_wrong_release_version_fails(self):
+        with self.assertRaisesRegex(ValueError, "Wrong artifact version"):
+            verify(self.build(ref=f"v{VERSION}"), COMMIT, "0.1.2")
+
+    def test_branch_archive_is_not_a_tagged_release(self):
+        with self.assertRaisesRegex(ValueError, "identify its version tag"):
+            verify(self.build(), COMMIT, VERSION)
+
+    def test_builder_rejects_mismatched_version_tag(self):
+        with self.assertRaisesRegex(ValueError, "differs from project version"):
+            self.build(ref="v0.1.0")
 
     def test_missing_required_member_fails_even_with_updated_checksum(self):
         archive = self.build()

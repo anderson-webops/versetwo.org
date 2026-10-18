@@ -16,7 +16,7 @@ EXPECTED_PUBLIC = {
 }
 
 
-def verify(archive, expected_commit):
+def verify(archive, expected_commit, expected_version=None):
     if not re.fullmatch(r"[0-9a-f]{40}", expected_commit):
         raise ValueError("Expected source commit must be a full SHA")
     checksum_path = archive.with_name(archive.name + ".sha256")
@@ -45,6 +45,13 @@ def verify(archive, expected_commit):
         raise ValueError("Wrong application manifest")
     if manifest["source"]["commit"] != expected_commit or manifest["source"]["repository"] != "anderson-webops/versetwo.org":
         raise ValueError("Wrong source identity")
+    version = manifest.get("version")
+    if version is not None and not re.fullmatch(r"(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)", version):
+        raise ValueError("Invalid artifact version")
+    if expected_version is not None and version != expected_version:
+        raise ValueError("Wrong artifact version")
+    if expected_version is not None and manifest["source"]["ref"] != f"v{expected_version}":
+        raise ValueError("Release artifact must identify its version tag")
     if set(manifest["files"]) != expected - {"manifest.json"}:
         raise ValueError("Incomplete artifact inventory")
     for name, item in manifest["files"].items():
@@ -55,7 +62,10 @@ def verify(archive, expected_commit):
     if (contract["schema_version"], contract["application"], contract["kind"], contract["artifact"]["document_root"]) != (1, "versetwo.org", "static", "public"):
         raise ValueError("Unsupported static hosting contract")
     identity = json.loads(files["public/deployment.json"])
-    if identity != {"commit": expected_commit, "ok": True, "ref": manifest["source"]["ref"], "runtime": "static", "service": "front-end"}:
+    expected_identity = {"commit": expected_commit, "ok": True, "ref": manifest["source"]["ref"], "runtime": "static", "service": "front-end"}
+    if version is not None:
+        expected_identity["version"] = version
+    if identity != expected_identity:
         raise ValueError("Served source identity differs from the manifest")
     for name in EXPECTED_PUBLIC:
         data = files[f"public/{name}"]
@@ -63,15 +73,16 @@ def verify(archive, expected_commit):
             raise ValueError(f"Invalid HTML entrypoint: {name}")
         if name.endswith(".pdf") and not data.startswith(b"%PDF-"):
             raise ValueError(f"Invalid PDF: {name}")
-    return {"archive": archive.name, "source_commit": expected_commit, "public_files": len(EXPECTED_PUBLIC), "integrity": "pass", "publication_allowlist": "pass"}
+    return {"archive": archive.name, "source_commit": expected_commit, "version": version, "public_files": len(EXPECTED_PUBLIC), "integrity": "pass", "publication_allowlist": "pass"}
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("archive", type=Path)
     parser.add_argument("--commit", required=True)
+    parser.add_argument("--version", help="Require this version and its matching release tag")
     args = parser.parse_args()
-    print(json.dumps(verify(args.archive, args.commit), indent=2))
+    print(json.dumps(verify(args.archive, args.commit, args.version), indent=2))
 
 
 if __name__ == "__main__":

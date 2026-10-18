@@ -4,15 +4,17 @@ Configured October 17, 2026 for `anderson-webops/versetwo.org`. Jacob subsequent
 
 ## GitHub build
 
-The `Validate and package static site` workflow runs on main-branch pushes, pull requests and manual requests. It:
+The `Validate and package static site` workflow runs on main-branch pushes, version-tag pushes, pull requests and manual requests. It:
 
 1. Regenerates the eight HTML pages and rejects uncommitted differences in the tracked website.
 2. Checks local links, fragments, page structure, accessibility basics, privacy constraints and the original budget calculation.
-3. Runs seven deployment-boundary and integrity regression tests.
-4. Packages the exact source commit and independently verifies the resulting archive.
+3. Checks VERSION/changelog agreement and runs deployment-boundary, release-policy and integrity regression tests.
+4. Packages the exact source commit, independently verifies the resulting archive, and serves the unpacked package in isolation to check file bytes and real 404s.
 5. Uploads an artifact named `versetwo-static-site-<full commit SHA>`, retained for 30 days.
 
 The workflow uses Ubuntu 24.04, read-only repository permissions and verified, full-SHA pins for official actions. It installs Python 3.13, declared in `.python-version`, and no third-party Python packages. It has no server credentials or deployment command. Source delivery, an accepted build and production activation are separate events.
+
+For annotated version tags, an additional job with scoped release-write permission publishes the exact accepted CI files through a draft-first upload/download verification gate. Branch/PR validation cannot publish. [Releasing](releasing.md) defines the version, commit, tag, release and failure-recovery sequence; `AGENTS.md` records the same repository-specific delivery policy. Documentation-only housekeeping does not create an application release.
 
 Repository attributes enforce LF line endings for generated code and pages while disabling conversion for the preserved source packet and binary files. Intentional Markdown hard-break spaces in the unchanged research exports are excluded from whitespace warnings; their exact content hashes remain required by the review-package check.
 
@@ -52,7 +54,7 @@ python3 scripts/build_site.py --commit FULL_COMMIT_SHA --ref main
 python3 scripts/verify_site.py build/versetwo.org-static.tar.gz --commit FULL_COMMIT_SHA
 ```
 
-The builder checks that the requested SHA matches HEAD and that the tracked deployment inputs have no uncommitted changes. The verifier works from the archive and sidecar alone; it does not need the source checkout or Python dependencies. Tests use disposable fixtures inside the locally excluded `.ai-work/` area.
+The builder checks that the requested SHA matches HEAD and the complete checkout is clean, including untracked files that are not ignored. VERSION is recorded in the manifest and served deployment identity. The verifier works from the archive and sidecar alone; it does not need the source checkout or Python dependencies. Tests use disposable fixtures inside the locally excluded `.ai-work/` area. For a release candidate, also run `scripts/smoke_site.py` against that exact archive and require the expected version using `--version X.Y.Z`.
 
 PDFs are checked-in static assets. CI does not re-render them, avoiding an unnecessary renderer installation; visual and print checks must still accompany changes that affect print content. See `validation.md` for their current scope.
 
@@ -76,6 +78,6 @@ The [initial private-repository run](https://github.com/anderson-webops/versetwo
 
 ## Local verification limits
 
-The native checks and seven regression tests pass locally, and `actionlint` accepts the workflow syntax. The guarded Zizmor wrapper reports approved 1.29.0 versus installed 1.31.1; the guarded Ruff wrapper reports approved 0.17.0 versus an unavailable/unknown version. Those checks stopped as required by the local preflight policy. No unguarded bypass or successful security/Python lint result is claimed.
+For the release-workflow update, the native generation/static/version checks and all 20 regression tests pass on Python 3.13.15. This includes rejection of lightweight/mismatched tags, wrong main/source/version identities, corrupt archives and unintended publication, plus isolated artifact HTTP byte/404 checks. The existing v0.1.0 archive still passes the updated verifier by its source SHA. No website/PDF/source-packet changes are included. `actionlint` accepts the workflow syntax. The guarded Zizmor wrapper reports approved 1.29.0 versus installed 1.31.1; the guarded Ruff wrapper reports approved 0.17.0 versus an unavailable/unknown version. Those checks stopped as required by the local preflight policy. No unguarded bypass or successful security/Python lint result is claimed.
 
-The configured global Git hooks delegate local hooks but have GitGuardian scanning disabled in their current files. The explicit local secret scan is recorded with the final verification result. These tool limits do not establish a failed static artifact or a successful production deployment.
+The configured global Git hooks delegate local hooks but have automatic GitGuardian scanning disabled in their current files; they were preserved. Explicit GitGuardian scanning of the 13 release-workflow files and staged Gitleaks scanning both found no secrets. These checks and tool limits do not establish host acceptance or a successful production deployment.
