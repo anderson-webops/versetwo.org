@@ -1,4 +1,6 @@
-"""Learner-defined relevance prompts and a checked account of returning to a draft."""
+"""Shared activity copy and a checked account of returning to a draft."""
+
+import re
 
 SIMZ_PROFILE = (
     'little-simz', '06', 'Little Simz', 'An earlier idea can have another use.',
@@ -11,13 +13,13 @@ SIMZ_PROFILE = (
     'Song Exploder · episode 294 · 2025; official transcript available',
 )
 
-GOAL_PROMPT = '''<section class="note" id="your-goal"><h2>Start with something you want to make.</h2><p>What would you like more control over: words, delivery, an arrangement, a reference, a budget, or something else? Keep your answer on paper, in your own notes or in your head. Pick one activity if it fits; trying them all is optional.</p></section>'''
-
 def learner_connection(body):
-    """Ask for the learner's connection before offering an adult-written example."""
-    return body.replace(
-        '<h3>One learning connection</h3>',
-        '<h3>Does this help your goal?</h3><p>How might it help? “No connection” is fine. Adapt or skip this option:</p>',
+    """Remove the repeated transfer commentary, retaining the local support link."""
+    result, count = re.subn(
+        r'<h3>One learning connection</h3><p>.*?</p>', '', body, flags=re.S,
     )
+    if count != 1:
+        raise ValueError('Expected one activity connection block')
+    return result
 
-LEARNER_RESEARCH_NOTE = '''<section><h2>A connection you can choose</h2><p>These activities give you room to decide what, if anything, helps your music. The learning routes are suggestions. You can practice on your own, ask a willing collaborator, use a library or community program, or choose a class or tutor.</p><p>Research on <a href="https://files.eric.ed.gov/fulltext/ED565393.pdf">relevance in laboratory tasks</a> and <a href="https://journals.sagepub.com/doi/full/10.1177/1475725720965002">optional online training</a> comes from different settings and has mixed results. It has not tested this website or shown that it improves school outcomes. If an activity adds pressure or makes your goal feel harder, you can shorten it, choose another task or stop.</p></section>'''
+LEARNER_RESEARCH_NOTE = '''<section><h2>A connection you can choose</h2><p>The learning routes are suggestions: independent practice, a collaborator, a library or community program, a class or a tutor.</p><p>Research on <a href="https://files.eric.ed.gov/fulltext/ED565393.pdf">relevance in laboratory tasks</a> and <a href="https://journals.sagepub.com/doi/full/10.1177/1475725720965002">optional online training</a> comes from different settings and has mixed results. It has not tested this website or shown that it improves school outcomes.</p></section>'''

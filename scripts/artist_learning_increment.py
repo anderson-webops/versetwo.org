@@ -50,24 +50,24 @@ NEW_ROUTES = {
     'doechii': ('emphasis', 'Try a small rehearsal'),
 }
 
-NEW_CARDS = '''<a href="stories.html#eminem"><span class="number">07</span><h3>Eminem</h3><p>Words and sounds to work with.</p><span class="card-meta">Vocabulary · 2010 interview</span></a>
-<a href="stories.html#rakim"><span class="number">08</span><h3>Rakim</h3><p>Listen for a different rhythm.</p><span class="card-meta">Listening · 2020 interview</span></a>
-<a href="stories.html#lupe-fiasco"><span class="number">09</span><h3>Lupe Fiasco</h3><p>One technique you can investigate.</p><span class="card-meta">Peer learning · 2025 interview</span></a>
-<a href="stories.html#doechii"><span class="number">10</span><h3>Doechii</h3><p>Prepare one part of a performance.</p><span class="card-meta">Rehearsal · 2023 interview</span></a>'''
+NEW_CARDS = '''<a href="stories.html#eminem"><span class="number">07</span><h3>Eminem</h3><span class="card-meta">Vocabulary · 2010 interview</span></a>
+<a href="stories.html#rakim"><span class="number">08</span><h3>Rakim</h3><span class="card-meta">Listening · 2020 interview</span></a>
+<a href="stories.html#lupe-fiasco"><span class="number">09</span><h3>Lupe Fiasco</h3><span class="card-meta">Peer learning · 2025 interview</span></a>
+<a href="stories.html#doechii"><span class="number">10</span><h3>Doechii</h3><span class="card-meta">Rehearsal · 2023 interview</span></a>'''
 
-NEW_SOURCES = '''<li><a href="https://www.cbsnews.com/news/eminems-incredible-rise-to-stardom-07-08-2011/">CBS / 60 Minutes: Eminem’s incredible rise to stardom</a><p>Anderson Cooper interview, first published October 10, 2010. The page displays August 7, 2011 and says it was updated August 2, 2011. See the studio word-choice discussion. We preserve the historical context.</p></li>
-<li><a href="https://www.thebeliever.net/an-interview-with-rakim/">The Believer: An Interview with Rakim</a><p>John O’Connor · April 1, 2020 · original interview. See the answers about musical understanding and John Coltrane in “Who Frank Sinatra Was.”</p></li>
-<li><a href="https://hub.jhu.edu/2025/01/07/lupe-fiasco-joins-peabody-faculty/">Johns Hopkins: Acclaimed rapper Lupe Fiasco joins Peabody as visiting professor</a><p>Aleyna Rentz · January 7, 2025 · original university interview. See the one-on-one lessons and academic-space answers. An appointment is different from an earned degree.</p></li>
-<li><a href="https://uproxx.com/music/doechii-interview-coachella-2023/">UPROXX: How Doechii’s Debut Coachella Performance Came Together in Two Weeks</a><p>Cherise Johnson · April 20, 2023 · original backstage interview. See the school-training and rehearsal answers.</p><p>Related: <a href="https://www.cosmopolitan.com/entertainment/a64433031/doechii-interview-2025/">Doechii’s 2025 Cosmopolitan interview</a> discusses arts education, critique and reading goals. It is an additional first-person source, not an independent audit of her schooling.</p></li>'''
+NEW_SOURCES = '''<li><a href="https://www.cbsnews.com/news/eminems-incredible-rise-to-stardom-07-08-2011/">CBS / 60 Minutes: Eminem’s incredible rise to stardom</a><p>Anderson Cooper interview, first published October 10, 2010. Updated 2011.</p></li>
+<li><a href="https://www.thebeliever.net/an-interview-with-rakim/">The Believer: An Interview with Rakim</a><p>John O’Connor · April 1, 2020 · original interview.</p></li>
+<li><a href="https://hub.jhu.edu/2025/01/07/lupe-fiasco-joins-peabody-faculty/">Johns Hopkins: Acclaimed rapper Lupe Fiasco joins Peabody as visiting professor</a><p>Aleyna Rentz · January 7, 2025 · original university interview.</p></li>
+<li><a href="https://uproxx.com/music/doechii-interview-coachella-2023/">UPROXX: How Doechii’s Debut Coachella Performance Came Together in Two Weeks</a><p>Cherise Johnson · April 20, 2023 · original backstage interview.</p><p>Related: <a href="https://www.cosmopolitan.com/entertainment/a64433031/doechii-interview-2025/">Doechii’s 2025 Cosmopolitan interview</a> discusses arts education, critique and reading goals.</p></li>'''
 
 ACTIVITY7 = '''<article class="activity" id="word-sound"><p class="eyebrow">07 / Words, sounds &amp; meanings · about 5 minutes</p>
-<h2>One word. More choices.</h2><p>Choose a word for what it does in your piece. A familiar word can do a lot. Write, speak quietly or think it through; a dictionary is optional.</p>
+<h2>One word. More choices.</h2><p>Write, speak quietly or think through the word choices.</p>
 <div class="example"><span>Original teaching example · invented sentences</span><p><strong>Word:</strong> light<br><strong>Meaning choices:</strong> brightness; not heavy<br><strong>Sound family:</strong> night, bright, out of sight</p><p class="verse">The room filled with light.<br>I kept my bag light.</p></div>
-<ol class="steps"><li><strong>Choose one word.</strong> Try “light,” “break” or a word from your own idea. Use a dictionary if you want another meaning; the example works offline.</li>
+<ol class="steps"><li><strong>Choose one word.</strong> Try “light,” “break” or a word from your own idea. Use a dictionary if you want another meaning.</li>
 <li><strong>Follow the meaning.</strong> Explain what your word means in this line. Could a listener understand it another way?</li>
-<li><strong>Follow the sound.</strong> Find two words or a short phrase that repeat a sound you like. You can speak them, imagine them or mark the sounds on paper. Your pronunciation and language variety belong in the experiment.</li>
-<li><strong>Make and compare.</strong> Write or imagine two original lines. Change one word or phrase. Which meaning or sound helps your idea? You can prefer the simpler version or decide rhyme adds nothing.</li></ol>
-<details><summary>One way to compare choices</summary><p>In the example, “light” changes meaning between the two sentences. “Bright” shares a sound with “light,” but replacing one with the other could change the grammar and meaning. A rhyme is a possibility, not a reason to give up the idea you meant.</p><p>A dictionary can offer meanings and pronunciation. It cannot choose the best line for you. You do not have to memorize a book or collect rare words.</p></details>
-<p class="source">Read <a href="stories.html#eminem">the vocabulary story</a> or <a href="stories.html#lupe-fiasco">the peer-learning story</a>. These sentences and this exercise are ours.</p>
-<h3>One learning connection</h3><p>Keep a small word notebook from reading or listening that interests you. Or ask a language teacher, librarian or music mentor to compare the meaning and sound of two choices. You decide which route helps.</p>
+<li><strong>Follow the sound.</strong> Find two words or a short phrase that repeat a sound you like. You can speak them, imagine them or mark the sounds on paper.</li>
+<li><strong>Make and compare.</strong> Write or imagine two original lines. Change one word or phrase. Which meaning or sound helps your idea?</li></ol>
+<details><summary>One way to compare choices</summary><p>In the example, “light” changes meaning between the two sentences. “Bright” shares a sound with “light,” but replacing one with the other could change the grammar and meaning.</p></details>
+<p class="source"><a href="stories.html#eminem">Eminem: vocabulary</a> · <a href="stories.html#lupe-fiasco">Lupe Fiasco: peer learning</a></p>
+<h3>One learning connection</h3><p>Keep a small word notebook from reading or listening that interests you. Or ask a language teacher, librarian or music mentor to compare the meaning and sound of two choices.</p>
 <a class="button secondary" href="next-step.html#writing">Find help with a word choice</a></article>'''

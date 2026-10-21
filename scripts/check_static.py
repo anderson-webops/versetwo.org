@@ -64,8 +64,8 @@ assert pages['stories.html'].articles==profile_ids
 assert all(id in pages['print.html'].articles for id in profile_ids)
 assert all('stories.html#'+id in pages['index.html'].links for id in profile_ids)
 assert all(link in pages['sources.html'].links for link in pages['stories.html'].links if urlsplit(link).scheme=='https')
-assert all((root/name).read_text().count('Does this help your goal?')==7 for name in ('practice.html','print.html'))
-assert 'your-goal' in pages['practice.html'].ids
+assert all('Does this help your goal?' not in (root/name).read_text() for name in ('practice.html','print.html'))
+assert all('What to take from it' not in (root/name).read_text() for name in ('stories.html','print.html'))
 assert 'week.html' in pages
 assert 'week-steps' in (root/'week.html').read_text()
 assert (root/'print.html').read_text().count('Try a step if it fits')==1

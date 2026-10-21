@@ -1,19 +1,13 @@
-Music / Practice - local review copy
+Music / Practice
 
-1. Extract the ZIP first. Keep all extracted files in the same folder.
-2. Open index.html in your usual browser. No installation or account is needed.
-3. Stories, activities and next-step prompts use local files. External source
-   websites require internet and may have their own ads or tracking.
-4. Open music-practice-packet.pdf for the 23-page printable version.
-5. Open facilitator-outline.pdf for a one-page adult session outline.
-6. Activities happen on paper, in your own notes, through speech or reflection.
-   The website does not receive or save your answers.
+Extract the ZIP and keep the files together. Open index.html in a browser.
 
-To check offline use, close the browser tab, disconnect your device from the
-internet in your usual way, then reopen index.html and navigate between pages.
-Do not change security protections or permissions to make it open. If local
-HTML opening is blocked by your organization, use the included PDF instead.
+music-practice-packet.pdf: 16-page practice packet.
+facilitator-outline.pdf: one-page adult session outline.
 
-This is a review prototype, not a youth-tested program. The name remains open.
-Artists have not endorsed the project. The adult guide explains the limits of
-use and requirements before any evaluation with minors.
+External source websites require internet and may contain ads or tracking.
+If your organization blocks local HTML files, use the PDFs. Do not change
+security settings or permissions.
+
+Artists have not endorsed the project. The adult guide covers safeguarding
+requirements before evaluation with minors.

@@ -1,5 +1,13 @@
 # Releases
 
+## v0.1.2
+
+- Remove repeated framing, motivational takeaways, generic onboarding and interface commentary across all eight pages.
+- Keep the ten dated artist accounts, seven original activities, worked examples, support routes and essential disclosures.
+- Apply the same copy cleanup to the practice packet and facilitator outline.
+
+Includes the previously local October 17 copy review, now authorized for source release. Production activation remains with the protected server-side system.
+
 ## v0.1.1
 
 - Add an explicit project version to the static artifact manifest and served deployment identity.

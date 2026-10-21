@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 report = {}
 for name, path, expected_pages in (
-    ('packet', ROOT / 'prototype/print.html', 23),
+    ('packet', ROOT / 'prototype/print.html', 16),
     ('facilitator', ROOT / 'output/pdf/facilitator-outline.html', 1),
 ):
     fetcher = URLFetcher(allowed_protocols=('file', 'data'), fail_on_errors=True)

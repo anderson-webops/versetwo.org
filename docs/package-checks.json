@@ -3,17 +3,17 @@
   "pdf_copies_identical": "pass",
   "offline": {
     "filename": "music-practice-offline.zip",
-    "bytes": 149937,
-    "sha256": "659a2777ee38072caa7a55c86eb85b9233d699ec7eb19a873d716fe49c48bd36",
+    "bytes": 112921,
+    "sha256": "79b5da19fa8780c6e0626d139a40e1a61351cb02de77bf0db6a5fa098f4f3e08",
     "files": 13,
     "crc": "pass",
     "member_bytes_match_source": "pass"
   },
   "review": {
     "filename": "youth-music-learning-review.zip",
-    "bytes": 584677,
-    "sha256": "be11ef02a68c56f795b1f754fa9d70e0bfa602bc7268f326a505d6145ced50bc",
-    "files": 64,
+    "bytes": 496885,
+    "sha256": "7eb9e2cf8f9d191f011899c8415373c8e9d446b37b9fd9d2d2284df69dc2c5e4",
+    "files": 71,
     "crc": "pass",
     "member_bytes_match_source": "pass"
   }
