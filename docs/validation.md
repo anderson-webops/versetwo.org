@@ -1,5 +1,14 @@
 # Validation record
 
+## October 22, 2026 screen redesign proposal (branch only)
+
+Jacob asked for a usability, readability and flow redesign on a dedicated `claude/` branch. The rationale and the open suggestions are in [redesign-2026-10-22.md](redesign-2026-10-22.md). Copy is unchanged apart from the navigation labels.
+
+- Python 3.15.0 local interpreter. `.python-version` declares 3.13; CI uses 3.13. Regeneration, static checks (including the new light/dark contrast, contents-list and pager checks), the version check, all 20 regression tests, `py_compile` and `git diff --check` pass.
+- WeasyPrint 70.0, file/data resources only: `print.html` is byte-identical to v0.1.2. The packet render is text-identical and pixel-identical at 60 dpi across all 16 pages. `check_print_layout.py` passes (16 + 1 pages). The checked-in PDFs were not regenerated.
+- Claude desktop browser pane (Chromium): all eight pages were checked at 320px for horizontal overflow (none). Home, Stories, Practice, Your week, Next step and For adults were reviewed at 1280px and 375/320px in light and dark schemes. The first Tab reaches a visible skip link. This is not a physical-device, browser-zoom or screen-reader audit.
+- The guarded Ruff preflight stopped: it expected 0.17.0 and found an unavailable binary. No lint pass is claimed.
+
 ## October 20, 2026 copy cleanup
 
 Jacob requested retaining only substantive content, necessary operation/navigation and essential accessibility/safety/legal text, and explicitly authorized committing, tagging and releasing the combined copy review. This supersedes the local-only delivery restriction in the historical October 17 entry below.

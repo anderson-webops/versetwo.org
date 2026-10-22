@@ -50,10 +50,12 @@ NEW_ROUTES = {
     'doechii': ('emphasis', 'Try a small rehearsal'),
 }
 
-NEW_CARDS = '''<a href="stories.html#eminem"><span class="number">07</span><h3>Eminem</h3><span class="card-meta">Vocabulary · 2010 interview</span></a>
-<a href="stories.html#rakim"><span class="number">08</span><h3>Rakim</h3><span class="card-meta">Listening · 2020 interview</span></a>
-<a href="stories.html#lupe-fiasco"><span class="number">09</span><h3>Lupe Fiasco</h3><span class="card-meta">Peer learning · 2025 interview</span></a>
-<a href="stories.html#doechii"><span class="number">10</span><h3>Doechii</h3><span class="card-meta">Rehearsal · 2023 interview</span></a>'''
+NEW_CARD_META = {
+    'eminem': 'Vocabulary · 2010 interview',
+    'rakim': 'Listening · 2020 interview',
+    'lupe-fiasco': 'Peer learning · 2025 interview',
+    'doechii': 'Rehearsal · 2023 interview',
+}
 
 NEW_SOURCES = '''<li><a href="https://www.cbsnews.com/news/eminems-incredible-rise-to-stardom-07-08-2011/">CBS / 60 Minutes: Eminem’s incredible rise to stardom</a><p>Anderson Cooper interview, first published October 10, 2010. Updated 2011.</p></li>
 <li><a href="https://www.thebeliever.net/an-interview-with-rakim/">The Believer: An Interview with Rakim</a><p>John O’Connor · April 1, 2020 · original interview.</p></li>

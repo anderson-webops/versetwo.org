@@ -83,6 +83,28 @@ assert all(v>=4.5 for v in contrast.values())
 assert ratio('#445269','#eef3ff')>=4.5
 assert ratio('#dbe4f5','#111a2c')>=4.5
 assert ratio('#c0cee7','#111a2c')>=4.5
-report={'pages':len(pages),'local_links_and_fragments':'pass','no_scripts_forms_embeds_or_remote_assets':'pass','single_h1_and_unique_ids':'pass','language_title_skip_and_disclosures':'pass','link_names_heading_order_aria_references':'pass','all_profiles_activities_week_in_print':'pass','profiles':10,'activities':7,'css_has_no_network_dependencies':'pass','fictional_budget':'pass','print_answers_not_collapsed':'pass','foreground_white_contrast':contrast,'web_content_bytes':sum(f.stat().st_size for f in root.iterdir() if f.suffix in ('.html','.css','.svg')),'print_pdf_bytes':(root/'music-practice-packet.pdf').stat().st_size,'facilitator_pdf_bytes':(root/'facilitator-outline.pdf').stat().st_size,'total_prototype_bytes':sum(f.stat().st_size for f in root.iterdir() if f.is_file())}
+def tokens(block):
+ return dict(re.findall(r'--([a-z-]+):(#[0-9a-f]{6})',block))
+screen=css[css.index('@media screen{'):]
+light=tokens(screen[:screen.index('}')])
+dark=tokens(screen[screen.index('prefers-color-scheme:dark'):])
+screen_contrast={}
+for name,palette in (('light',{**light}),('dark',{**light,**dark})):
+ for fg in ('ink','muted','blue'):
+  for bg in ('bg','surface','soft'):
+   screen_contrast[f'{name} {fg}/{bg}']=round(ratio(palette[fg],palette[bg]),2)
+ screen_contrast[f'{name} on-blue/blue']=round(ratio(palette['on-blue'],palette['blue']),2)
+ screen_contrast[f'{name} surface/ink']=round(ratio(palette['surface'],palette['ink']),2)
+ for bg in ('bg','surface'):
+  screen_contrast[f'{name} focus/{bg}']=round(ratio(palette['focus'],palette[bg]),2)
+assert all(v>=(3 if 'focus/' in k else 4.5) for k,v in screen_contrast.items()),screen_contrast
+assert css.index('@media print{')<css.index('@media screen{'),'print rules must stay separate from the screen design'
+for name in ('stories.html','practice.html'):
+ assert 'class="index"' in (root/name).read_text(),(name,'missing contents list')
+assert all(('practice.html#'+id) in pages['index.html'].links for id in activity_ids)
+flow=['index.html','stories.html','practice.html','week.html','next-step.html']
+for a,b in zip(flow,flow[1:]):
+ assert b in pages[a].links and a in pages[b].links,(a,b,'pager')
+report={'pages':len(pages),'local_links_and_fragments':'pass','no_scripts_forms_embeds_or_remote_assets':'pass','single_h1_and_unique_ids':'pass','language_title_skip_and_disclosures':'pass','link_names_heading_order_aria_references':'pass','all_profiles_activities_week_in_print':'pass','profiles':10,'activities':7,'css_has_no_network_dependencies':'pass','fictional_budget':'pass','print_answers_not_collapsed':'pass','foreground_white_contrast':contrast,'screen_palette_contrast':screen_contrast,'contents_lists_and_pager':'pass','web_content_bytes':sum(f.stat().st_size for f in root.iterdir() if f.suffix in ('.html','.css','.svg')),'print_pdf_bytes':(root/'music-practice-packet.pdf').stat().st_size,'facilitator_pdf_bytes':(root/'facilitator-outline.pdf').stat().st_size,'total_prototype_bytes':sum(f.stat().st_size for f in root.iterdir() if f.is_file())}
 (root.parent/'docs'/'static-check-results.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

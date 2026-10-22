@@ -1,22 +1,38 @@
 from pathlib import Path
 from html import escape
-from artist_learning_increment import NEW_PROFILES, NEW_ROUTES, NEW_CARDS, NEW_SOURCES, ACTIVITY7
+import re
+from artist_learning_increment import NEW_PROFILES, NEW_ROUTES, NEW_CARD_META, NEW_SOURCES, ACTIVITY7
 from producing_increment import BADU_PROFILE, ACTIVITY6
 from choice_increment import SIMZ_PROFILE, learner_connection
 from content_increment import (GZA_PROFILE, ACTIVITY_ROUTES, ACTIVITY3, ACTIVITY4, ACTIVITY5, ACTIVITY_LINKS, WEEK)
 p=Path(__file__).resolve().parents[1]/'prototype'
 nav=[('index.html','Start'),('stories.html','Stories'),('practice.html','Practice'),('week.html','Your week'),('next-step.html','Next step')]
 footer='''<footer><div><a href="sources.html">Sources</a><a href="guide.html">For adults</a><a href="print.html">Print / offline packet</a></div></footer>'''
+def pager(file):
+ urls=[u for u,_ in nav]
+ if file not in urls: return ''
+ i=urls.index(file);links=''
+ if i: links+=f'<a class="prev" href="{nav[i-1][0]}"><span>Previous</span> {nav[i-1][1]}</a>'
+ if i<len(nav)-1: links+=f'<a class="next" href="{nav[i+1][0]}"><span>Next</span> {nav[i+1][1]}</a>'
+ return f'<nav class="pager" aria-label="Previous and next page">{links}</nav>'
+def indexed(label,items,body):
+ links=''.join(f'<li><a href="#{id}"><span class="number">{num}</span> {name}'+(f' <span class="index-meta">{meta}</span>' if meta else '')+'</a></li>' for id,num,name,meta in items)
+ return f'<div class="indexed"><nav class="index" aria-label="{label}"><ol>{links}</ol></nav><div class="indexed-body">{body}</div></div>'
+def cards(items):
+ return '<ul class="cards" role="list">'+''.join(f'<li><a href="{url}"><span class="number">{num}</span> <span class="card-title">{name}</span> <span class="card-meta">{meta}</span></a></li>' for url,num,name,meta in items)+'</ul>'
+def activity_summary(body):
+ id=re.search(r'id="([^"]+)"',body).group(1)
+ num,_,detail=re.search(r'<p class="eyebrow">(.*?)</p>',body).group(1).partition(' / ')
+ skill,_,minutes=detail.partition(' · about ')
+ return id,num,re.search(r'<h2>(.*?)</h2>',body).group(1),skill,minutes.replace(' minutes',' min')
 def page(file,title,body):
- if file=='index.html':
-  body=body.replace('</div></section>',NEW_CARDS+'</div></section>',1).replace('<h3>','<h2>').replace('</h3>','</h2>')
- if file in ('practice.html','print.html'):
+ if file=='print.html':
   body=body.replace('Six original activities.','Seven original activities.').replace('Stories, six activities,','Stories, seven activities,').replace('all six stories, six activities','all ten stories, seven activities')
   insertion='<section class="print-section">'
   activity=learner_connection(ACTIVITY7)
-  body=body+activity if file=='practice.html' else body.replace(insertion,for_print(activity)+insertion,1)
+  body=body.replace(insertion,for_print(activity)+insertion,1)
  links=''.join(f'<a href="{u}"'+(' aria-current="page"' if u==file else '')+f'>{t}</a>' for u,t in nav)
- p.joinpath(file).write_text(f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Rap writing, artist process stories and practical learning choices. Free private activities."><meta name="referrer" content="no-referrer"><title>{escape(title)} · Music / Practice</title><link rel="stylesheet" href="style.css"><link rel="icon" type="image/svg+xml" href="favicon.svg"></head><body><a class="skip" href="#main">Skip to content</a><header><a class="wordmark" href="index.html">Music <span>/</span> Practice</a><nav aria-label="Main">{links}</nav></header><main id="main" tabindex="-1">{body}</main>{footer}</body></html>''')
+ p.joinpath(file).write_text(f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Rap writing, artist process stories and practical learning choices. Free private activities."><meta name="referrer" content="no-referrer"><title>{escape(title)} · Music / Practice</title><link rel="stylesheet" href="style.css"><link rel="icon" type="image/svg+xml" href="favicon.svg"></head><body><a class="skip" href="#main">Skip to content</a><header><a class="wordmark" href="index.html">Music <span>/</span> Practice</a><nav aria-label="Main">{links}</nav></header><main id="main" tabindex="-1">{body}{pager(file)}</main>{footer}</body></html>''')
 profile_data=[
  ('black-thought','01','Black Thought','Keep a draft. See what changes.','Drafting · artist interview · 2021',
  'In a 2021 interview, Black Thought described writing on a computer and in phone notes. He also found old notebooks containing drafts. In the same interview, he recalled leaving Millersville University and returning to Philadelphia.',
@@ -58,9 +74,13 @@ activity1=activity1.replace('Find a next step for writing</a>','Find a next step
 activity1,activity2,ACTIVITY3,ACTIVITY4,ACTIVITY5,ACTIVITY6=tuple(learner_connection(a) for a in (activity1,activity2,ACTIVITY3,ACTIVITY4,ACTIVITY5,ACTIVITY6))
 guide=guide.replace('Ask what the artist actually practiced.','Ask what the artist actually practiced. Then ask what the participant wants to make or understand; allow no connection.',1)
 guide=guide.replace('“What changed? What did not help?”','“What changed? What did not help? Did this add pressure or make the goal feel harder?”',1)
-page('index.html','Start','''<h1>Artist stories</h1><section><div class="cards"><a href="stories.html#black-thought"><span class="number">01</span><h3>Black Thought</h3><span class="card-meta">Writing · 2021 interview</span></a><a href="stories.html#rapsody"><span class="number">02</span><h3>Rapsody</h3><span class="card-meta">Revision · 2014 interview</span></a><a href="stories.html#megan"><span class="number">03</span><h3>Megan Thee Stallion</h3><span class="card-meta">Planning · 2020 interview</span></a><a href="stories.html#gza"><span class="number">04</span><h3>GZA</h3><span class="card-meta">Inquiry · 2015 article</span></a><a href="stories.html#badu-dilla"><span class="number">05</span><h3>Erykah Badu / J Dilla</h3><span class="card-meta">Collaboration · 2013 account</span></a><a href="stories.html#little-simz"><span class="number">06</span><h3>Little Simz</h3><span class="card-meta">Drafts · 2025 interview</span></a></div></section>''')
-page('stories.html','Artist stories','<h1>Artist stories</h1><nav class="local-nav" aria-label="Artist stories">'+''.join(f'<a href="#{x[0]}">{x[2]}</a>' for x in profile_data)+'</nav>'+profiles)
-page('practice.html','Practice','<h1>Practice</h1><nav class="local-nav" aria-label="Activities">'+''.join(f'<a href="#{id}">{label}</a>' for id,label in ACTIVITY_LINKS)+'</nav>'+activity1+activity2+ACTIVITY3+ACTIVITY4+ACTIVITY5+ACTIVITY6)
+story_meta={'black-thought':'Writing · 2021 interview','rapsody':'Revision · 2014 interview','megan':'Planning · 2020 interview','gza':'Inquiry · 2015 article','badu-dilla':'Collaboration · 2013 account','little-simz':'Drafts · 2025 interview',**NEW_CARD_META}
+activities=(activity1,activity2,ACTIVITY3,ACTIVITY4,ACTIVITY5,ACTIVITY6,learner_connection(ACTIVITY7))
+activity_data=[activity_summary(a) for a in activities]
+short_names=dict(ACTIVITY_LINKS)
+page('index.html','Start','<h1>Artist stories</h1>'+cards(('stories.html#'+x[0],x[1],x[2],story_meta[x[0]]) for x in profile_data)+'<section class="home-practice"><h2>Practice</h2>'+cards(('practice.html#'+id,num,title,f'{skill} · {minutes}') for id,num,title,skill,minutes in activity_data)+'</section>')
+page('stories.html','Artist stories','<h1>Artist stories</h1>'+indexed('Artist stories',((x[0],x[1],x[2],'') for x in profile_data),profiles))
+page('practice.html','Practice','<h1>Practice</h1>'+indexed('Activities',((id,num,escape(short_names[id]),minutes) for id,num,title,skill,minutes in activity_data),''.join(activities)))
 support=support.replace('<section id="credits">','<section id="research"><h2>Check a fact or reference</h2><p class="ask">“Does this source support what I wrote, and where could I check it?”</p><p>Try a librarian or subject teacher. Use the provided offline source cards if browsing is not available.</p></section><section id="credits">')
 support=support.replace('<section id="credits">','<section id="collaboration"><h2>Explain a creative choice</h2><p class="ask">“This is what I want someone to notice. What changes between these versions?”</p><p>Try a music or drama teacher, mentor or willing listener in an established arts program.</p></section><section id="credits">')
 page('week.html','Your week',WEEK)
