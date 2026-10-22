@@ -11,6 +11,9 @@ import tarfile
 EXPECTED_PUBLIC = {
     "index.html", "stories.html", "practice.html", "week.html",
     "next-step.html", "sources.html", "guide.html", "print.html",
+    "practice-four-lines.html", "practice-show.html", "practice-emphasis.html",
+    "practice-reference.html", "practice-viewpoints.html",
+    "practice-choose-part.html", "practice-word-sound.html",
     "style.css", "favicon.svg", "music-practice-packet.pdf",
     "facilitator-outline.pdf", "deployment.json",
 }

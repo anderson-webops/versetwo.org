@@ -1,5 +1,5 @@
 from pathlib import Path
-from html import escape
+from html import escape, unescape
 import re
 from artist_learning_increment import NEW_PROFILES, NEW_ROUTES, NEW_CARD_META, NEW_SOURCES, ACTIVITY7
 from producing_increment import BADU_PROFILE, ACTIVITY6
@@ -8,31 +8,39 @@ from content_increment import (GZA_PROFILE, ACTIVITY_ROUTES, ACTIVITY3, ACTIVITY
 p=Path(__file__).resolve().parents[1]/'prototype'
 nav=[('index.html','Start'),('stories.html','Stories'),('practice.html','Practice'),('week.html','Your week'),('next-step.html','Next step')]
 footer='''<footer><div><a href="sources.html">Sources</a><a href="guide.html">For adults</a><a href="print.html">Print / offline packet</a></div></footer>'''
-def pager(file):
- urls=[u for u,_ in nav]
+def pager(file,sequence):
+ urls=[u for u,_ in sequence]
  if file not in urls: return ''
  i=urls.index(file);links=''
- if i: links+=f'<a class="prev" href="{nav[i-1][0]}"><span>Previous</span> {nav[i-1][1]}</a>'
- if i<len(nav)-1: links+=f'<a class="next" href="{nav[i+1][0]}"><span>Next</span> {nav[i+1][1]}</a>'
+ if i: links+=f'<a class="prev" href="{sequence[i-1][0]}"><span>Previous</span> {sequence[i-1][1]}</a>'
+ if i<len(sequence)-1: links+=f'<a class="next" href="{sequence[i+1][0]}"><span>Next</span> {sequence[i+1][1]}</a>'
  return f'<nav class="pager" aria-label="Previous and next page">{links}</nav>'
-def indexed(label,items,body):
- links=''.join(f'<li><a href="#{id}"><span class="number">{num}</span> {name}'+(f' <span class="index-meta">{meta}</span>' if meta else '')+'</a></li>' for id,num,name,meta in items)
- return f'<div class="indexed"><nav class="index" aria-label="{label}"><ol>{links}</ol></nav><div class="indexed-body">{body}</div></div>'
-def cards(items):
- return '<ul class="cards" role="list">'+''.join(f'<li><a href="{url}"><span class="number">{num}</span> <span class="card-title">{name}</span> <span class="card-meta">{meta}</span></a></li>' for url,num,name,meta in items)+'</ul>'
+def indexed(label,items,body,current=None,cls='indexed'):
+ links=''.join(f'<li><a href="{url}"'+(' aria-current="page"' if url==current else '')+f'><span class="number">{num}</span> {name}'+(f' <span class="index-meta">{meta}</span>' if meta else '')+'</a></li>' for url,num,name,meta in items)
+ return f'<div class="{cls}"><nav class="index" aria-label="{label}"><ol>{links}</ol></nav><div class="indexed-body">{body}</div></div>'
+def cards(items,ids=None):
+ return '<ul class="cards" role="list">'+''.join(f'<li'+(f' id="{ids[i]}"' if ids else '')+f'><a href="{url}"><span class="number">{num}</span> <span class="card-title">{name}</span> <span class="card-meta">{meta}</span></a></li>' for i,(url,num,name,meta) in enumerate(items))+'</ul>'
+def activity_file(id):
+ return f'practice-{id}.html'
+def legacy_links(body):
+ # The packet keeps its original practice.html#id targets; practice.html keeps those anchors.
+ return re.sub(r'href="practice-([a-z-]+)\.html"',r'href="practice.html#\1"',body)
+def promote(body):
+ return body.replace('<h2>','<h1>').replace('</h2>','</h1>').replace('<h3>','<h2>').replace('</h3>','</h2>')
 def activity_summary(body):
  id=re.search(r'id="([^"]+)"',body).group(1)
  num,_,detail=re.search(r'<p class="eyebrow">(.*?)</p>',body).group(1).partition(' / ')
  skill,_,minutes=detail.partition(' · about ')
  return id,num,re.search(r'<h2>(.*?)</h2>',body).group(1),skill,minutes.replace(' minutes',' min')
-def page(file,title,body):
+def page(file,title,body,sequence=nav):
  if file=='print.html':
   body=body.replace('Six original activities.','Seven original activities.').replace('Stories, six activities,','Stories, seven activities,').replace('all six stories, six activities','all ten stories, seven activities')
   insertion='<section class="print-section">'
   activity=learner_connection(ACTIVITY7)
-  body=body.replace(insertion,for_print(activity)+insertion,1)
- links=''.join(f'<a href="{u}"'+(' aria-current="page"' if u==file else '')+f'>{t}</a>' for u,t in nav)
- p.joinpath(file).write_text(f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Rap writing, artist process stories and practical learning choices. Free private activities."><meta name="referrer" content="no-referrer"><title>{escape(title)} · Music / Practice</title><link rel="stylesheet" href="style.css"><link rel="icon" type="image/svg+xml" href="favicon.svg"></head><body><a class="skip" href="#main">Skip to content</a><header><a class="wordmark" href="index.html">Music <span>/</span> Practice</a><nav aria-label="Main">{links}</nav></header><main id="main" tabindex="-1">{body}{pager(file)}</main>{footer}</body></html>''')
+  body=legacy_links(body.replace(insertion,for_print(activity)+insertion,1))
+ section='practice.html' if file.startswith('practice-') else None
+ links=''.join(f'<a href="{u}"'+(' aria-current="page"' if u==file else ' aria-current="true"' if u==section else '')+f'>{t}</a>' for u,t in nav)
+ p.joinpath(file).write_text(f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Rap writing, artist process stories and practical learning choices. Free private activities."><meta name="referrer" content="no-referrer"><title>{escape(title)} · Music / Practice</title><link rel="stylesheet" href="style.css"><link rel="icon" type="image/svg+xml" href="favicon.svg"></head><body><a class="skip" href="#main">Skip to content</a><header><a class="wordmark" href="index.html">Music <span>/</span> Practice</a><nav aria-label="Main">{links}</nav></header><main id="main" tabindex="-1">{body}{pager(file,sequence)}</main>{footer}</body></html>''')
 profile_data=[
  ('black-thought','01','Black Thought','Keep a draft. See what changes.','Drafting · artist interview · 2021',
  'In a 2021 interview, Black Thought described writing on a computer and in phone notes. He also found old notebooks containing drafts. In the same interview, he recalled leaving Millersville University and returning to Philadelphia.',
@@ -62,7 +70,7 @@ ACTIVITY_LINKS.append(('word-sound', 'Words & meanings'))
 profiles=''
 for id,num,artist,headline,badge,fact,limit,tryit,bridge,url,source in profile_data:
  route,label=ACTIVITY_ROUTES[id]
- activity_url=route if route.endswith('.html') else 'practice.html#'+route
+ activity_url=route if route.endswith('.html') else activity_file(route)
  profiles+=f'''<article class="story" id="{id}"><div class="story-top"><span class="number">{num}</span><div><p class="eyebrow">{badge}</p><h2>{artist}</h2></div></div><p>{fact}</p><p class="source"><a href="{url}">{source}</a></p><a class="button secondary" href="{activity_url}">{label}</a></article>'''
 activity1='''<article class="activity" id="four-lines"><p class="eyebrow">01 / Writing &amp; revision · about 5–7 minutes</p><h2>Four lines. Two versions.</h2><p>Make a listener picture an invented scene. Write, speak quietly, or think it through.</p><div class="example"><span>Original teaching example · fictional scene</span><p class="verse">The last bus pulled away.<br>I stood under the shelter.<br>The rain was loud.<br>I waited for a ride.</p></div><ol class="steps"><li><strong>Start your own scene.</strong> Use four lines about an ordinary object or fictional moment. You can also work from the example.</li><li><strong>Keep the first version.</strong> On paper, in your own notes, or in memory.</li><li><strong>Change one thing.</strong> Replace a vague detail, move a pause, or cut a word that does not help.</li><li><strong>Compare.</strong> What changed in the picture, meaning or sound?</li></ol><details><summary>See one possible revision</summary><p class="verse">The last bus pulled away.<br>I folded my ticket twice.<br>Rain rattled the shelter roof.<br>I watched for familiar headlights.</p><p>This version adds visible and audible details.</p></details><div class="note"><strong>If you want feedback</strong><p>Ask a willing listener what they remember and where they lose the idea.</p></div><h3>One learning connection</h3><p>Bring two versions of a paragraph, presentation or verse to a teacher or tutor. Ask: “Which detail makes the idea clearer?”</p><a class="button" href="next-step.html#writing">Find a next step for writing</a></article>'''
 activity2='''<article class="activity" id="show"><p class="eyebrow">02 / Music business &amp; arithmetic · about 5 minutes</p><h2>What is left from a $500 show?</h2><p><strong>Invented scenario.</strong> Two collaborators receive a $500 fee. Travel costs $75 and an engineer costs $125. They agree to keep $100 for a future project and split the rest equally.</p><ol class="steps"><li>Subtract the two expenses. How much cash remains?</li><li>Set aside the agreed reserve. How much is available to split?</li><li>Divide that amount between the two people.</li><li>What needs to be agreed before the show? What cost might be missing?</li></ol><details><summary>Compare with the worked example</summary><dl class="budget"><div><dt>Fee received</dt><dd>$500</dd></div><div><dt>Travel + engineer</dt><dd>−$200</dd></div><div><dt>Cash after those expenses</dt><dd>$300</dd></div><div><dt>Agreed project reserve</dt><dd>−$100</dd></div><div><dt>Available to distribute</dt><dd>$200</dd></div><div><dt>Each person's share</dt><dd>$100</dd></div></dl><p>The reserve is cash kept for later, not automatically another expense. This does not calculate taxable profit or final after-tax income. Ask who approves costs, when payment happens and what happens if a cost changes.</p></details><h3>One learning connection</h3><p>Ask a math teacher or tutor to check your explanation of the split. For a real paid opportunity, ask a trusted adult to help find qualified advice about terms, rights and payment.</p><a class="button" href="next-step.html#business">Find a next step for music business</a></article>'''
@@ -78,9 +86,13 @@ story_meta={'black-thought':'Writing · 2021 interview','rapsody':'Revision · 2
 activities=(activity1,activity2,ACTIVITY3,ACTIVITY4,ACTIVITY5,ACTIVITY6,learner_connection(ACTIVITY7))
 activity_data=[activity_summary(a) for a in activities]
 short_names=dict(ACTIVITY_LINKS)
-page('index.html','Start','<h1>Artist stories</h1>'+cards(('stories.html#'+x[0],x[1],x[2],story_meta[x[0]]) for x in profile_data)+'<section class="home-practice"><h2>Practice</h2>'+cards(('practice.html#'+id,num,title,f'{skill} · {minutes}') for id,num,title,skill,minutes in activity_data)+'</section>')
-page('stories.html','Artist stories','<h1>Artist stories</h1>'+indexed('Artist stories',((x[0],x[1],x[2],'') for x in profile_data),profiles))
-page('practice.html','Practice','<h1>Practice</h1>'+indexed('Activities',((id,num,escape(short_names[id]),minutes) for id,num,title,skill,minutes in activity_data),''.join(activities)))
+page('index.html','Start','<h1>Artist stories</h1>'+cards(('stories.html#'+x[0],x[1],x[2],story_meta[x[0]]) for x in profile_data)+'<section class="home-practice"><h2>Practice</h2>'+cards((activity_file(id),num,title,f'{skill} · {minutes}') for id,num,title,skill,minutes in activity_data)+'</section>')
+page('stories.html','Artist stories','<h1>Artist stories</h1>'+indexed('Artist stories',(('#'+x[0],x[1],x[2],'') for x in profile_data),profiles))
+page('practice.html','Practice','<h1>Practice</h1>'+cards([(activity_file(id),num,title,f'{skill} · {minutes}') for id,num,title,skill,minutes in activity_data],[x[0] for x in activity_data]))
+activity_index=[(activity_file(id),num,escape(short_names[id]),minutes) for id,num,title,skill,minutes in activity_data]
+activity_sequence=[('practice.html','Practice'),*((url,name) for url,num,name,minutes in activity_index),('week.html','Your week')]
+for body,(id,num,title,skill,minutes) in zip(activities,activity_data):
+ page(activity_file(id),unescape(re.sub(r'<.*?>','',title)),indexed('Activities',activity_index,promote(body),activity_file(id),'indexed activity-nav'),activity_sequence)
 support=support.replace('<section id="credits">','<section id="research"><h2>Check a fact or reference</h2><p class="ask">“Does this source support what I wrote, and where could I check it?”</p><p>Try a librarian or subject teacher. Use the provided offline source cards if browsing is not available.</p></section><section id="credits">')
 support=support.replace('<section id="credits">','<section id="collaboration"><h2>Explain a creative choice</h2><p class="ask">“This is what I want someone to notice. What changes between these versions?”</p><p>Try a music or drama teacher, mentor or willing listener in an established arts program.</p></section><section id="credits">')
 page('week.html','Your week',WEEK)
@@ -92,4 +104,4 @@ def for_print(body):
 def embedded(body):
  return body.replace('<h3>','<h4>').replace('</h3>','</h4>').replace('<h2>','<h3>').replace('</h2>','</h3>').replace('<h1>','<h2>').replace('</h1>','</h2>')
 page('print.html','Print and offline packet','<h1>Music practice packet</h1><div class="offline-options"><a class="button secondary" href="music-practice-packet.pdf" download>Save the print PDF</a><p class="quiet">External source websites need internet.</p></div>'+profiles+''.join(for_print(a) for a in (activity1,activity2,ACTIVITY3,ACTIVITY4,ACTIVITY5,ACTIVITY6))+'<section class="print-section">'+embedded(WEEK)+'</section><section class="print-section">'+embedded(support)+'</section><section class="print-section">'+embedded(guide)+'</section>')
-print('Eight static pages generated.')
+print(f'{8+len(activities)} static pages generated.')

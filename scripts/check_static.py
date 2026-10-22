@@ -57,14 +57,18 @@ for filename,x in pages.items():
 assert (500-75-125-100)/2==100
 assert (root/'print.html').read_text().count('<details>')==0
 activity_ids=['four-lines','show','emphasis','reference','viewpoints','choose-part','word-sound']
-assert pages['practice.html'].articles==activity_ids
+activity_pages=['practice-'+id+'.html' for id in activity_ids]
+assert not pages['practice.html'].articles and all(id in pages['practice.html'].ids for id in activity_ids),'practice.html keeps legacy activity anchors'
+assert [l for l in pages['practice.html'].links if l.startswith('practice-')]==activity_pages
+assert all(pages[name].articles==[id] for name,id in zip(activity_pages,activity_ids))
+assert sorted(f.name for f in root.glob('practice-*.html'))==sorted(activity_pages),'unexpected activity page'
 assert all(id in pages['print.html'].articles for id in activity_ids)
 profile_ids=['black-thought','rapsody','megan','gza','badu-dilla','little-simz','eminem','rakim','lupe-fiasco','doechii']
 assert pages['stories.html'].articles==profile_ids
 assert all(id in pages['print.html'].articles for id in profile_ids)
 assert all('stories.html#'+id in pages['index.html'].links for id in profile_ids)
 assert all(link in pages['sources.html'].links for link in pages['stories.html'].links if urlsplit(link).scheme=='https')
-assert all('Does this help your goal?' not in (root/name).read_text() for name in ('practice.html','print.html'))
+assert all('Does this help your goal?' not in (root/name).read_text() for name in ('practice.html','print.html',*activity_pages))
 assert all('What to take from it' not in (root/name).read_text() for name in ('stories.html','print.html'))
 assert 'week.html' in pages
 assert 'week-steps' in (root/'week.html').read_text()
@@ -99,12 +103,17 @@ for name,palette in (('light',{**light}),('dark',{**light,**dark})):
   screen_contrast[f'{name} focus/{bg}']=round(ratio(palette['focus'],palette[bg]),2)
 assert all(v>=(3 if 'focus/' in k else 4.5) for k,v in screen_contrast.items()),screen_contrast
 assert css.index('@media print{')<css.index('@media screen{'),'print rules must stay separate from the screen design'
-for name in ('stories.html','practice.html'):
+for name in ('stories.html',*activity_pages):
  assert 'class="index"' in (root/name).read_text(),(name,'missing contents list')
-assert all(('practice.html#'+id) in pages['index.html'].links for id in activity_ids)
+assert all(name in pages['index.html'].links for name in activity_pages)
 flow=['index.html','stories.html','practice.html','week.html','next-step.html']
+activity_flow=['practice.html',*activity_pages,'week.html']
+for a,b in zip(activity_flow[1:-1],activity_flow[2:]):
+ assert b in pages[a].links,(a,b,'activity pager')
+for a,b in zip(activity_flow,activity_flow[1:-1]):
+ assert a in pages[b].links,(a,b,'activity pager')
 for a,b in zip(flow,flow[1:]):
  assert b in pages[a].links and a in pages[b].links,(a,b,'pager')
-report={'pages':len(pages),'local_links_and_fragments':'pass','no_scripts_forms_embeds_or_remote_assets':'pass','single_h1_and_unique_ids':'pass','language_title_skip_and_disclosures':'pass','link_names_heading_order_aria_references':'pass','all_profiles_activities_week_in_print':'pass','profiles':10,'activities':7,'css_has_no_network_dependencies':'pass','fictional_budget':'pass','print_answers_not_collapsed':'pass','foreground_white_contrast':contrast,'screen_palette_contrast':screen_contrast,'contents_lists_and_pager':'pass','web_content_bytes':sum(f.stat().st_size for f in root.iterdir() if f.suffix in ('.html','.css','.svg')),'print_pdf_bytes':(root/'music-practice-packet.pdf').stat().st_size,'facilitator_pdf_bytes':(root/'facilitator-outline.pdf').stat().st_size,'total_prototype_bytes':sum(f.stat().st_size for f in root.iterdir() if f.is_file())}
+report={'pages':len(pages),'local_links_and_fragments':'pass','no_scripts_forms_embeds_or_remote_assets':'pass','single_h1_and_unique_ids':'pass','language_title_skip_and_disclosures':'pass','link_names_heading_order_aria_references':'pass','all_profiles_activities_week_in_print':'pass','profiles':10,'activities':7,'activity_pages':len(activity_pages),'css_has_no_network_dependencies':'pass','fictional_budget':'pass','print_answers_not_collapsed':'pass','foreground_white_contrast':contrast,'screen_palette_contrast':screen_contrast,'contents_lists_and_pager':'pass','web_content_bytes':sum(f.stat().st_size for f in root.iterdir() if f.suffix in ('.html','.css','.svg')),'print_pdf_bytes':(root/'music-practice-packet.pdf').stat().st_size,'facilitator_pdf_bytes':(root/'facilitator-outline.pdf').stat().st_size,'total_prototype_bytes':sum(f.stat().st_size for f in root.iterdir() if f.is_file())}
 (root.parent/'docs'/'static-check-results.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

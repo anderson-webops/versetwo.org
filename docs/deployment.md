@@ -6,7 +6,7 @@ Configured October 17, 2026 for `anderson-webops/versetwo.org`. Jacob subsequent
 
 The `Validate and package static site` workflow runs on main-branch pushes, version-tag pushes, pull requests and manual requests. It:
 
-1. Regenerates the eight HTML pages and rejects uncommitted differences in the tracked website.
+1. Regenerates the fifteen HTML pages and rejects uncommitted differences in the tracked website.
 2. Checks local links, fragments, page structure, accessibility basics, privacy constraints and the original budget calculation.
 3. Checks VERSION/changelog agreement and runs deployment-boundary, release-policy and integrity regression tests.
 4. Packages the exact source commit, independently verifies the resulting archive, and serves the unpacked package in isolation to check file bytes and real 404s.
@@ -27,7 +27,7 @@ The workflow artifact and the published `v0.1.0` GitHub release contain:
 - `manifest.json`
 - `deployment-contract.json`
 
-The tar archive contains `public/`, plus its manifest and contract. Only the eight HTML pages, CSS, favicon, two PDFs and generated `deployment.json` are included in `public/`. All site links are relative, allowing the existing host to choose its URL path. There is no CNAME or DNS configuration in this repository.
+The tar archive contains `public/`, plus its manifest and contract. Only the fifteen HTML pages (eight main pages and seven activity pages), CSS, favicon, two PDFs and generated `deployment.json` are included in `public/`. All site links are relative, allowing the existing host to choose its URL path. There is no CNAME or DNS configuration in this repository.
 
 Research exports, source code, internal notes, outreach drafts, Git metadata, caches and review ZIPs are excluded from the website package. Tracked research, code and notes are visible in the now-public GitHub repository. The independently maintained verifier rejects unexpected archive members, missing pages, symlinks, checksum failures and a different source commit. Serve only the archive's `public/` directory, never the repository root or the full review bundle.
 

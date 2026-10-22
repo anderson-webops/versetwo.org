@@ -4,7 +4,7 @@ Shared Sites policy (`../AGENTS.md` in the Sites checkout) applies. Keep shared 
 
 ## Project and preserved evidence
 
-- `scripts/build_prototype.py` and its four content modules generate the eight pages in `prototype/`. Change generators, then regenerate; do not hand-edit generated pages.
+- `scripts/build_prototype.py` and its four content modules generate the fifteen pages in `prototype/` (eight main pages plus one `practice-<id>.html` page per activity). Change generators, then regenerate; do not hand-edit generated pages.
 - Preserve the exact `source-packet/` bytes. `scripts/package_review.py` checks the six original source hashes. Read the handoff, GOAL, exact original brief and preserved sources before substantive content changes. Keep checked evidence distinct from imported claims and untested outcomes.
 - Jacob prefers Next Verse; versetwo.org is the repository/domain candidate. Do not silently select Verse Two or imply an artist partnership.
 - Keep website wording useful and minimal. Do not put development status or naming decisions in the interface. Preserve accessibility, evidence limits, attribution and necessary disclosures.

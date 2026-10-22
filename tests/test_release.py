@@ -89,7 +89,7 @@ class StaticArtifactSmokeTests(unittest.TestCase):
             version = read_version(ROOT)
             archive = build(ROOT / "prototype", ROOT / "deployment-contract.json", isolated / "build", commit, f"v{version}", version)
             result = smoke(archive, commit, version)
-            self.assertEqual(result["public_files"], 13)
+            self.assertEqual(result["public_files"], 20)
             self.assertEqual(result["isolated_http"], "pass")
             self.assertEqual(result["missing_and_private_paths"], "404")
 

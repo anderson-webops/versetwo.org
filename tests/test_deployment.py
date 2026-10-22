@@ -11,7 +11,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from build_site import ARCHIVE_NAME, PUBLIC_FILES, build
-from verify_site import verify
+from verify_site import EXPECTED_PUBLIC, verify
 
 COMMIT = "a" * 40
 VERSION = "0.1.1"
@@ -35,7 +35,20 @@ class DeploymentTests(unittest.TestCase):
     def test_exact_archive_is_reproducible_and_accepted(self):
         first, second = self.build("one"), self.build("two")
         self.assertEqual(first.read_bytes(), second.read_bytes())
-        self.assertEqual(verify(first, COMMIT)["public_files"], 13)
+        self.assertEqual(verify(first, COMMIT)["public_files"], 20)
+
+    def test_every_generated_site_file_is_published(self):
+        generated = {
+            path.name for path in (ROOT / "prototype").iterdir()
+            if path.suffix in (".html", ".css", ".svg", ".pdf")
+        }
+        self.assertEqual(set(PUBLIC_FILES), generated)
+        self.assertEqual(EXPECTED_PUBLIC - {"deployment.json"}, generated)
+
+    def test_missing_activity_page_fails(self):
+        (self.source / "practice-show.html").unlink()
+        with self.assertRaisesRegex(ValueError, "Missing or non-regular"):
+            self.build()
 
     def test_private_or_unknown_material_is_not_published(self):
         (self.source / "private-notes.md").write_text("Private draft, not a site asset")

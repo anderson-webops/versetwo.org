@@ -1,5 +1,5 @@
 {
-  "pages": 8,
+  "pages": 15,
   "local_links_and_fragments": "pass",
   "no_scripts_forms_embeds_or_remote_assets": "pass",
   "single_h1_and_unique_ids": "pass",
@@ -8,6 +8,7 @@
   "all_profiles_activities_week_in_print": "pass",
   "profiles": 10,
   "activities": 7,
+  "activity_pages": 7,
   "css_has_no_network_dependencies": "pass",
   "fictional_budget": "pass",
   "print_answers_not_collapsed": "pass",
@@ -46,8 +47,8 @@
     "dark focus/surface": 8.05
   },
   "contents_lists_and_pager": "pass",
-  "web_content_bytes": 87577,
+  "web_content_bytes": 104927,
   "print_pdf_bytes": 71825,
   "facilitator_pdf_bytes": 15079,
-  "total_prototype_bytes": 174481
+  "total_prototype_bytes": 191831
 }

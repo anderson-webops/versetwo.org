@@ -8,6 +8,7 @@ Jacob asked for a usability, readability and flow redesign on a dedicated `claud
 - WeasyPrint 70.0, file/data resources only: `print.html` is byte-identical to v0.1.2. The packet render is text-identical and pixel-identical at 60 dpi across all 16 pages. `check_print_layout.py` passes (16 + 1 pages). The checked-in PDFs were not regenerated.
 - Claude desktop browser pane (Chromium): all eight pages were checked at 320px for horizontal overflow (none). Home, Stories, Practice, Your week, Next step and For adults were reviewed at 1280px and 375/320px in light and dark schemes. The first Tab reaches a visible skip link. This is not a physical-device, browser-zoom or screen-reader audit.
 - The guarded Ruff preflight stopped: it expected 0.17.0 and found an unavailable binary. No lint pass is claimed.
+- One page per activity (same branch): the generator produces 15 pages. Static checks, all 22 regression tests (including the new allowlist-completeness and missing-activity-page tests) and the version check pass. `print.html` is still byte-identical, and the packet is still pixel-identical across all 16 pages. All 15 pages were checked at 320 and 375px with no horizontal overflow. Activity pages were reviewed at 1280px and 375px. The legacy `practice.html#word-sound` link lands on its card.
 
 ## October 20, 2026 copy cleanup
 
