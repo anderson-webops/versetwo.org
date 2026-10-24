@@ -1,5 +1,13 @@
 # Validation record
 
+## October 24, 2026 story fact rows (v0.1.5)
+
+Jacob found the "said / recalled" story openings vague. Each story now shows its source and date first, then two or three labeled rows. The wording stays within the BT, RP, MG, GZ, EB, LS, EM, RK, LF and DC register claims. No verbatim artist quotes were added: The Paris Review and Johns Hopkins sources still return HTTP 403 to automated fetching, and the other pages were only read through a summarizer, so exact wording could not be verified.
+
+- Regeneration, static checks, the version check, all 22 regression tests and `git diff --check` pass.
+- WeasyPrint 70.0, tagged, file/data resources only: the packet is still 16 Letter pages, `check_print_layout.py` passes, and all pages were visually reviewed. Matching copies are in `prototype/` and `output/pdf/`.
+- Browser pane at 1280 and 375px: the rows read as a two-column list on desktop and stacked label/value pairs on phones, with no horizontal overflow. Story numbers no longer split across lines on phones.
+
 ## October 23, 2026 release identity, not-found page and live check (v0.1.4)
 
 Jacob asked for `/release.json` and other similarly useful pieces from the other anderson-webops sites. A read-only survey of the Marietta Violin, math.avasan, avasan, Audiot and jacobdanderson.net sources and live endpoints found a `release.json` that mirrors `deployment.json`, a `404.html`, and a live smoke check. Those three were adopted. Not adopted:

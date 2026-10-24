@@ -5,7 +5,7 @@ import re
 SIMZ_PROFILE = (
     'little-simz', '06', 'Little Simz', 'An earlier idea can have another use.',
     'Returning to a draft · artist interview · 2025',
-    'Little Simz said she wrote a poem in spring 2022 and came back to it two years later, while making “Free.”',
+    (('Spring 2022', 'Wrote a poem'), ('Two years later', 'Came back to it while making “Free”')),
     'This is her account of one song, not a schedule to follow or an explanation of fame. An earlier draft can give you material to keep, change or set aside.',
     'Keep a short original draft. If you want, return after a pause and notice one thing you would keep or change. You choose whether another version helps.',
     'Where would you want to practice that choice: on your own, with a willing collaborator, or with a teacher, librarian or music mentor?',
