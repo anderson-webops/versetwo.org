@@ -1,5 +1,13 @@
 # Validation record
 
+## October 24, 2026 one-line page titles (v0.1.6)
+
+Jacob asked for page titles on one line, not two oversized lines. The screen-only rule sizes the title from the screen width and the longest title (11.85em), capped at 2.75rem.
+
+- Browser pane: all nine page titles measure one line at 320, 375, 768 and 1280px (22.6px, 27.1px, then 44px), with no horizontal overflow.
+- WeasyPrint 70.0: the packet render is pixel-identical at 60 dpi across all 16 pages to v0.1.5, so the PDFs are unchanged.
+- Python 3.15.0: regeneration, static checks, the version check, all 22 regression tests and `git diff --check` pass.
+
 ## October 24, 2026 story fact rows (v0.1.5)
 
 Jacob found the "said / recalled" story openings vague. Each story now shows its source and date first, then two or three labeled rows. The wording stays within the BT, RP, MG, GZ, EB, LS, EM, RK, LF and DC register claims. No verbatim artist quotes were added: The Paris Review and Johns Hopkins sources still return HTTP 403 to automated fetching, and the other pages were only read through a summarizer, so exact wording could not be verified.
@@ -8,6 +16,12 @@ Jacob found the "said / recalled" story openings vague. Each story now shows its
 - Python 3.15.0 (Homebrew): regeneration, static checks, the version check, all 22 regression tests and `git diff --check` pass. The shell's default `/usr/bin/python3` is 3.9.6, below the declared 3.13. It fails the two artifact tests because `tarfile` lacks the `filter` argument there, so that is an interpreter problem, not a code regression. Use Python 3.13 or newer.
 - WeasyPrint 70.0, tagged, file/data resources only: the packet is still 16 Letter pages, `check_print_layout.py` passes, and all pages were visually reviewed. Matching copies are in `prototype/` and `output/pdf/`.
 - Browser pane at 1280 and 375px: the rows read as a two-column list on desktop and stacked label/value pairs on phones, with no horizontal overflow. Story numbers no longer split across lines on phones.
+
+## October 24, 2026 main v0.1.6 merged into the redesign branch (branch only)
+
+- This brings in the story fact rows and one-line titles. The fact rows use the redesign's panel styling, and their print rules are copied from main, so `print.html` and both PDFs match main's v0.1.6.
+- In the redesign, page titles are sized against the longest title (12.0em), and activity-page titles against the longest activity title (14.2em, inside the panel padding). Apple's system font uses a wider "Text" cut below about 20pt, so small titles need extra room. Browser pane: all 16 titles measure one line at 320, 360, 375, 414, 521, 700, 1000 and 1280px, with no horizontal overflow.
+- Python 3.15.0: static checks, the version check, all 24 regression tests and `git diff --check` pass.
 
 ## October 23, 2026 main v0.1.4 merged into the redesign branch (branch only)
 

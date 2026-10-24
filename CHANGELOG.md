@@ -1,5 +1,10 @@
 # Releases
 
+## v0.1.6
+
+- Keep every page title on one line on screen, from 320px phones to desktop, capped at 2.75rem. "What would help right now?" previously filled two very large lines.
+- Print layout and PDFs are unchanged.
+
 ## v0.1.5
 
 - Show each artist story as its source and date, followed by two or three labeled fact rows ("Late 2005", "Teacher", "Since kindergarten", and so on) instead of a "said / recalled" paragraph. The rows stay within the checked evidence-register claims.
