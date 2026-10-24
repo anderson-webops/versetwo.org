@@ -1,5 +1,10 @@
 # Releases
 
+## v0.1.7
+
+- Reduce screen title sizing for the longer Next step heading at 390px without forcing no-wrap; enlarged text remains free to reflow.
+- Print layout and PDFs are unchanged.
+
 ## v0.1.6
 
 - Keep every page title on one line on screen, from 320px phones to desktop, capped at 2.75rem. "What would help right now?" previously filled two very large lines.
