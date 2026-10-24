@@ -39,23 +39,24 @@ def page(file,title,body,sequence=nav):
   activity=learner_connection(ACTIVITY7)
   body=legacy_links(body.replace(insertion,for_print(activity)+insertion,1))
  section='practice.html' if file.startswith('practice-') else None
+ robots='<meta name="robots" content="noindex">' if file=='404.html' else ''
  links=''.join(f'<a href="{u}"'+(' aria-current="page"' if u==file else ' aria-current="true"' if u==section else '')+f'>{t}</a>' for u,t in nav)
- p.joinpath(file).write_text(f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Rap writing, artist process stories and practical learning choices. Free private activities."><meta name="referrer" content="no-referrer"><title>{escape(title)} · Music / Practice</title><link rel="stylesheet" href="style.css"><link rel="icon" type="image/svg+xml" href="favicon.svg"></head><body><a class="skip" href="#main">Skip to content</a><header><a class="wordmark" href="index.html">Music <span>/</span> Practice</a><nav aria-label="Main">{links}</nav></header><main id="main" tabindex="-1">{body}{pager(file,sequence)}</main>{footer}</body></html>''')
+ p.joinpath(file).write_text(f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Rap writing, artist process stories and practical learning choices. Free private activities."><meta name="referrer" content="no-referrer">{robots}<title>{escape(title)} · Music / Practice</title><link rel="stylesheet" href="style.css"><link rel="icon" type="image/svg+xml" href="favicon.svg"></head><body><a class="skip" href="#main">Skip to content</a><header><a class="wordmark" href="index.html">Music <span>/</span> Practice</a><nav aria-label="Main">{links}</nav></header><main id="main" tabindex="-1">{body}{pager(file,sequence)}</main>{footer}</body></html>''')
 profile_data=[
  ('black-thought','01','Black Thought','Keep a draft. See what changes.','Drafting · artist interview · 2021',
- 'In a 2021 interview, Black Thought described writing on a computer and in phone notes. He also found old notebooks containing drafts. In the same interview, he recalled leaving Millersville University and returning to Philadelphia.',
+ 'Black Thought said he writes on a computer and in his phone’s notes, and has found old notebooks full of drafts. He also recalled leaving Millersville University and going back to Philadelphia.',
  'His account includes school and an interrupted college path. It does not show that leaving school caused success. Keeping a draft is one practice you can try without copying his life.',
  'Keep four original lines. Change one detail in a second version. Which version gives a listener a clearer picture?',
  'Ask a teacher, tutor or librarian to compare two versions of a paragraph or verse you choose to share.',
  'https://www.theparisreview.org/blog/2021/04/29/everything-writes-itself-an-interview-with-black-thought/','The Paris Review · April 29, 2021'),
  ('rapsody','02','Rapsody','Ask for something you can use.','Feedback · artist interview · 2014',
- 'Rapsody recalled that producer 9th Wonder heard her CD in late 2005. He told her it was a good start and that there were things to work on. She also described learning how much cadence and melody mattered.',
+ 'Rapsody recalled producer 9th Wonder hearing her CD in late 2005 and calling it a good start, with things to work on. She said she had to learn how much cadence and melody matter.',
  'This is her account of learning through feedback. It does not prove that every suggestion is useful. You can decide what fits your piece and keep your voice.',
  'Ask a willing listener: “Which part stayed with you?” and “Where did you lose the idea?” Choose one change to try.',
  'Use the same two questions with a teacher or tutor on a paragraph, presentation or piece of writing.',
  'https://blog.sonicbids.com/rapsody-interview','Sonicbids · January 8, 2014'),
  ('megan','03','Megan Thee Stallion','Make room for more than one goal.','Planning · original interview · 2020',
- 'In a 2020 PEOPLE interview, Megan was taking part-time online health-administration courses at Texas Southern University. She described fitting schoolwork around shows.',
+ 'In 2020, Megan Thee Stallion was studying health administration part-time online at Texas Southern University alongside her music career. She said she fit schoolwork around her shows.',
  'Her story shows two goals happening together. It does not mean everyone needs college, or that school caused her music success. Your time and support may look different.',
  'Choose one small music goal and one learning goal for this week. What help or time would each need?',
  'Ask a counselor, teacher or trusted adult one specific question about a class, credits or another learning option.',
@@ -104,4 +105,5 @@ def for_print(body):
 def embedded(body):
  return body.replace('<h3>','<h4>').replace('</h3>','</h4>').replace('<h2>','<h3>').replace('</h2>','</h3>').replace('<h1>','<h2>').replace('</h1>','</h2>')
 page('print.html','Print and offline packet','<h1>Music practice packet</h1><div class="offline-options"><a class="button secondary" href="music-practice-packet.pdf" download>Save the print PDF</a><p class="quiet">External source websites need internet.</p></div>'+profiles+''.join(for_print(a) for a in (activity1,activity2,ACTIVITY3,ACTIVITY4,ACTIVITY5,ACTIVITY6))+'<section class="print-section">'+embedded(WEEK)+'</section><section class="print-section">'+embedded(support)+'</section><section class="print-section">'+embedded(guide)+'</section>')
-print(f'{8+len(activities)} static pages generated.')
+page('404.html','Page not found','<h1>Page not found</h1>')
+print(f'{9+len(activities)} static pages generated.')

@@ -1,5 +1,29 @@
 # Validation record
 
+## October 23, 2026 main v0.1.4 merged into the redesign branch (branch only)
+
+- Merge result: 16 pages. Static checks (including both theme palettes, the contents lists and both pager sequences), the version check, all 24 regression tests and `git diff --check` pass.
+- `print.html` is byte-identical to main's. The WeasyPrint 70.0 packet render is pixel-identical at 60 dpi across all 16 pages to main's v0.1.3 PDF, and `check_print_layout.py` passes (16 + 1 pages). The checked-in PDFs are main's, unchanged.
+- Claude desktop browser pane (Chromium), 320 and 375px: no horizontal overflow on Start, Stories, Practice, Your week, Next step, an activity page or `404.html`. Heights after the phone tightening are recorded in `redesign-2026-10-22.md`. Rewritten story text and the 404 page were reviewed visually. This is not a device, zoom or screen-reader audit.
+
+## October 23, 2026 release identity, not-found page and live check (v0.1.4)
+
+Jacob asked for `/release.json` and other similarly useful pieces from the other anderson-webops sites. A read-only survey of the Marietta Violin, math.avasan, avasan, Audiot and jacobdanderson.net sources and live endpoints found a `release.json` that mirrors `deployment.json`, a `404.html`, and a live smoke check. Those three were adopted. Not adopted:
+
+- `healthz` and `readyz` files. Shared policy says static sites should not add artificial health services.
+- `robots.txt` and `sitemap.xml`. The host already serves `robots.txt` with `Disallow: /` and an `x-robots-tag: noindex` header for this site, and the artifact should not contradict that.
+
+- Regeneration adds only `404.html`; the other eight pages are byte-identical. Static checks, the version check, all 22 regression tests (including the new release-identity and live-checker tests) and `git diff --check` pass.
+- `check_live.py` against the downloaded v0.1.3 manifest: versetwo.org serves all 13 public files, plus a real 404, identically over IPv4 and IPv6, at commit `81e3dd8` / version 0.1.3. The served ref is the host's `commit/…` form.
+- Note: `/404.html` is served as a file. Whether missing paths display it depends on the host's error-page configuration, which this repository does not control.
+
+## October 23, 2026 artist account rewrite (v0.1.3)
+
+Jacob said the artist accounts had the right idea but meandered. All ten were rewritten to lead with the practice and drop the repeated "In a 20XX interview" openers. Dates and publishers remain on the eyebrow and source line. Each paraphrase stays within its evidence-register claim (BT1–2, RP1–2, MG1–2, GZ1, EB1–2, LS1–2, EM1, RK1–2, LF1–2, DC1–2).
+
+- Rechecked the original sources on October 23. CBS: "used to read the dictionary" is Anderson Cooper's phrasing; Eminem's answer was about wanting words at his disposal, so the account no longer states that he read it. The Believer: Rakim said he had played instruments since kindergarten, learned jazz timing from his brother at a community center and brought Coltrane's playing into his delivery. The Paris Review and Johns Hopkins pages returned HTTP 403, so those two accounts were not rechecked. Their wording stays within the previously inspected BT and LF claims.
+- WeasyPrint 70.0, tagged, file/data resources only: the packet is still 16 Letter pages, and 411/40 nonempty text boxes are within page bounds. All pages were visually reviewed. Matching copies are in `prototype/` and `output/pdf/`. The facilitator outline is unchanged.
+
 ## October 22, 2026 screen redesign proposal (branch only)
 
 Jacob asked for a usability, readability and flow redesign on a dedicated `claude/` branch. The rationale and the open suggestions are in [redesign-2026-10-22.md](redesign-2026-10-22.md). Copy is unchanged apart from the navigation labels.

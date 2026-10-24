@@ -19,7 +19,7 @@ PUBLIC_FILES = (
     "practice-four-lines.html", "practice-show.html", "practice-emphasis.html",
     "practice-reference.html", "practice-viewpoints.html",
     "practice-choose-part.html", "practice-word-sound.html",
-    "style.css", "favicon.svg", "music-practice-packet.pdf",
+    "404.html", "style.css", "favicon.svg", "music-practice-packet.pdf",
     "facilitator-outline.pdf",
 )
 ARCHIVE_NAME = "versetwo.org-static.tar.gz"
@@ -53,6 +53,8 @@ def build(source, contract_path, destination, commit, ref, version):
         "commit": commit, "ok": True, "ref": ref,
         "runtime": "static", "service": "front-end", "version": version,
     })
+    # Release tooling on the shared host reads /release.json; keep it identical.
+    payload["public/release.json"] = payload["public/deployment.json"]
     payload["deployment-contract.json"] = json_bytes(contract)
     manifest = {
         "schema_version": 1, "application": "versetwo.org", "version": version,

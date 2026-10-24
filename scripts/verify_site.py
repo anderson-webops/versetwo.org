@@ -15,7 +15,7 @@ EXPECTED_PUBLIC = {
     "practice-reference.html", "practice-viewpoints.html",
     "practice-choose-part.html", "practice-word-sound.html",
     "style.css", "favicon.svg", "music-practice-packet.pdf",
-    "facilitator-outline.pdf", "deployment.json",
+    "facilitator-outline.pdf", "404.html", "deployment.json", "release.json",
 }
 
 
@@ -70,6 +70,8 @@ def verify(archive, expected_commit, expected_version=None):
         expected_identity["version"] = version
     if identity != expected_identity:
         raise ValueError("Served source identity differs from the manifest")
+    if files["public/release.json"] != files["public/deployment.json"]:
+        raise ValueError("release.json must mirror deployment.json")
     for name in EXPECTED_PUBLIC:
         data = files[f"public/{name}"]
         if name.endswith(".html") and (b"<!doctype html>" not in data.lower() or b'<main id="main"' not in data):

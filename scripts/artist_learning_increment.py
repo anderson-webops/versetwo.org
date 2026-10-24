@@ -4,7 +4,7 @@ NEW_PROFILES = (
     (
         'eminem', '07', 'Eminem', 'Give yourself more words to choose from.',
         'Vocabulary & sound · artist interview · 2010',
-        'In 2010, Eminem discussed dictionary reading for vocabulary and demonstrated rhyming through pronunciation in his interview with Anderson Cooper.',
+        'Asked by Anderson Cooper about reading the dictionary, Eminem said he wanted to have all of those words at his disposal. He also showed how he makes words rhyme by changing how he pronounces them.',
         'Studying words can mean noticing their meaning and sound. This historical account does not establish a current daily routine or formal study of linguistics. Longer or rarer words are not automatically better choices.',
         'Choose an ordinary word. Find another meaning or a word with a similar sound. Write two original lines, then keep the wording that fits your idea.',
         'Try your own word notebook, a dictionary from a library, or a conversation with a language or music teacher. Ask what changes in meaning and sound between two choices.',
@@ -14,7 +14,7 @@ NEW_PROFILES = (
     (
         'rakim', '08', 'Rakim', 'Listen for something you can change.',
         'Rhythm & listening · artist interview · 2020',
-        'In a 2020 interview, Rakim recalled learning instruments as a child and studying jazz timing with his brother at a community center. He described using John Coltrane’s saxophone phrasing as an influence on his rap delivery.',
+        'Rakim recalled playing instruments from kindergarten and learning jazz timing from his brother at a community center. He said he worked the way John Coltrane played saxophone into his rap delivery.',
         'He connected earlier music learning with later choices about rhythm and space. You can explore a pause or a pattern without owning an instrument or copying another artist’s words.',
         'Tap four steady beats. Speak an original sentence twice, changing where you pause. Or mark pauses on paper and imagine the difference. Which version suits the sentence?',
         'Ask a music teacher, community tutor or willing collaborator to help you hear or mark one rhythm. A poetry or drama activity can also be a place to try pauses.',
@@ -24,7 +24,7 @@ NEW_PROFILES = (
     (
         'lupe-fiasco', '09', 'Lupe Fiasco', 'Make a specific part of the craft learnable.',
         'Peer learning & technique · artist interview · 2025',
-        'In a 2025 Johns Hopkins interview, Lupe Fiasco recalled sharing verses and getting feedback from other rappers at high school. He also described teaching rap techniques and introducing experienced rappers to linguistics and communication theory through the Society of Spoken Art.',
+        'Lupe Fiasco recalled trading verses and feedback with other rappers in high school. He later taught rap technique through the Society of Spoken Art, introducing experienced rappers to linguistics and communication theory.',
         'Linguistics studies how language works. Sounds, meanings and how people communicate can be things to investigate in your own writing. His teaching roles are not evidence of an earned university degree, and you do not need a university place to try a small experiment.',
         'Pick one question: Does this word have two meanings? Where does the important sound land? Ask a willing listener what they notice, or compare two versions privately.',
         'Choose one question for a writing group, library resource, teacher or music mentor. Ask for help with that specific choice rather than a judgment of your whole piece.',
@@ -34,7 +34,7 @@ NEW_PROFILES = (
     (
         'doechii', '10', 'Doechii', 'Practice can include a whole performance.',
         'Music learning & rehearsal · artist interview · 2023',
-        'After her 2023 Coachella debut, Doechii told UPROXX that performing-arts high school included chorus, writing music and music theory. She also described rehearsing with her band and dancers every day for two weeks before the show.',
+        'Doechii said her performing-arts high school included chorus, writing music and music theory. For her 2023 Coachella debut, she rehearsed with her band and dancers every day for two weeks.',
         'This is her account of one education experience and one show. It offers a look at preparation, not a timetable you need to match. A short, comfortable rehearsal can focus on one choice.',
         'Use two original lines or the invented practice example. Try a clear pause in one version and a different emphasis in another. You can work silently on paper; recording and performing are optional.',
         'Try a chorus, music or drama class, an established community program, or a willing collaborator. Ask for feedback on one part, such as the pace or a pause.',

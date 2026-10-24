@@ -1,5 +1,21 @@
 # Releases
 
+## v0.1.4
+
+- Serve `/release.json` alongside `/deployment.json`, as the other anderson-webops static sites do. The two files are byte-identical, and the verifier enforces this.
+- Add a `404.html` not-found page in the site's own layout, with the main navigation and `noindex`.
+- Add `scripts/check_live.py`, a read-only check that the public site serves a release's exact files over IPv4 and IPv6.
+
+Pages and PDFs are otherwise unchanged from v0.1.3. Production activation remains with the protected server-side system.
+
+## v0.1.3
+
+- Rewrite all ten artist accounts so each opens with what the artist did or learned, in fewer words. Dates and publishers stay on each story's eyebrow and source line.
+- The Eminem account now matches the CBS interview: reading the dictionary was Anderson Cooper's question, and Eminem's answer was about wanting words at his disposal.
+- Rebuild the tagged 16-page practice packet. The facilitator outline is unchanged.
+
+Production activation remains with the protected server-side system.
+
 ## v0.1.2
 
 - Remove repeated framing, motivational takeaways, generic onboarding and interface commentary across all eight pages.

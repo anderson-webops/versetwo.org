@@ -1,5 +1,5 @@
 {
-  "pages": 15,
+  "pages": 16,
   "local_links_and_fragments": "pass",
   "no_scripts_forms_embeds_or_remote_assets": "pass",
   "single_h1_and_unique_ids": "pass",
@@ -47,8 +47,8 @@
     "dark focus/surface": 8.05
   },
   "contents_lists_and_pager": "pass",
-  "web_content_bytes": 104927,
-  "print_pdf_bytes": 71825,
+  "web_content_bytes": 105852,
+  "print_pdf_bytes": 71700,
   "facilitator_pdf_bytes": 15079,
-  "total_prototype_bytes": 191831
+  "total_prototype_bytes": 192631
 }

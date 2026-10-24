@@ -35,7 +35,7 @@ class DeploymentTests(unittest.TestCase):
     def test_exact_archive_is_reproducible_and_accepted(self):
         first, second = self.build("one"), self.build("two")
         self.assertEqual(first.read_bytes(), second.read_bytes())
-        self.assertEqual(verify(first, COMMIT)["public_files"], 20)
+        self.assertEqual(verify(first, COMMIT)["public_files"], 22)
 
     def test_every_generated_site_file_is_published(self):
         generated = {
@@ -43,12 +43,18 @@ class DeploymentTests(unittest.TestCase):
             if path.suffix in (".html", ".css", ".svg", ".pdf")
         }
         self.assertEqual(set(PUBLIC_FILES), generated)
-        self.assertEqual(EXPECTED_PUBLIC - {"deployment.json"}, generated)
+        self.assertEqual(EXPECTED_PUBLIC - {"deployment.json", "release.json"}, generated)
 
     def test_missing_activity_page_fails(self):
         (self.source / "practice-show.html").unlink()
         with self.assertRaisesRegex(ValueError, "Missing or non-regular"):
             self.build()
+
+    def test_release_identity_mirrors_deployment_identity(self):
+        with tarfile.open(self.build(), "r:gz") as tar:
+            release = tar.extractfile("public/release.json").read()
+            self.assertEqual(release, tar.extractfile("public/deployment.json").read())
+            self.assertEqual(json.loads(release)["commit"], COMMIT)
 
     def test_private_or_unknown_material_is_not_published(self):
         (self.source / "private-notes.md").write_text("Private draft, not a site asset")

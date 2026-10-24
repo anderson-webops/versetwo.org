@@ -4,7 +4,7 @@ Shared Sites policy (`../AGENTS.md` in the Sites checkout) applies. Keep shared 
 
 ## Project and preserved evidence
 
-- `scripts/build_prototype.py` and its four content modules generate the fifteen pages in `prototype/` (eight main pages plus one `practice-<id>.html` page per activity). Change generators, then regenerate; do not hand-edit generated pages.
+- `scripts/build_prototype.py` and its four content modules generate the sixteen pages in `prototype/`: eight main pages, one `practice-<id>.html` page per activity, and `404.html`. Change generators, then regenerate; do not hand-edit generated pages.
 - Preserve the exact `source-packet/` bytes. `scripts/package_review.py` checks the six original source hashes. Read the handoff, GOAL, exact original brief and preserved sources before substantive content changes. Keep checked evidence distinct from imported claims and untested outcomes.
 - Jacob prefers Next Verse; versetwo.org is the repository/domain candidate. Do not silently select Verse Two or imply an artist partnership.
 - Keep website wording useful and minimal. Do not put development status or naming decisions in the interface. Preserve accessibility, evidence limits, attribution and necessary disclosures.
@@ -20,7 +20,7 @@ Shared Sites policy (`../AGENTS.md` in the Sites checkout) applies. Keep shared 
 
 ## Commit, tag and release
 
-- Deliver coherent validated work directly to `main`, then push. Use a PR only if requested or branch protection requires one. Do not sweep unrelated or explicitly local edits into a commit. Use an isolated clean checkout when needed.
+- Commit coherent validated increments frequently and push completed work directly to `main`. Use a PR only if requested or branch protection requires one. Preserve unrelated or separately scoped edits, using an isolated clean checkout when needed. Finish deployable work through the existing tag-CI release publication workflow and follow protected deployment with read-only public acceptance checks or report the exact remaining blocker.
 - `VERSION` is the canonical application version; `CHANGELOG.md` supplies the release notes. Use patch versions for compatible content, security and packaging changes, minor versions for new capabilities, and a major version for an intentional incompatible release. Increment only for a release-worthy deployable state, not every commit.
 - For a deployable milestone, align VERSION and the changelog, commit and push main, then create an annotated `vX.Y.Z` tag on that exact accepted main commit. Confirm main CI, run `scripts/check_release.py --tag vX.Y.Z --commit FULL_SHA`, and push the tag in the same work session. Never force-push or move an existing published tag without explicit authorization for that exact rewrite.
 - Tag CI repeats all checks, verifies the version/annotated tag/source/main relationship, then independently accepts and smoke-tests the artifact. The release job uses those exact CI files, checks them again, creates a draft, uploads the four deployment files, downloads/verifies all four, then publishes the release. Only that job has `contents: write`; branch/PR validation is read-only.
@@ -31,5 +31,5 @@ Shared Sites policy (`../AGENTS.md` in the Sites checkout) applies. Keep shared 
 
 - Never SSH, SCP, SFTP, tunnel to, configure access to, or administer production from this checkout. Never activate a release or change live services, configuration, data or release pointers. Protected server-side automation owns deployment.
 - Preserve existing IPv4/IPv6 and all A/AAAA records. DNS, certificates, routing and host ownership remain operator-controlled. The static host contract is a requirement, not evidence of an installed compatible adapter.
-- Report source delivery, CI acceptance, GitHub publication, host acceptance and independently verified live identity separately. A tag or published release does not prove production activation.
+- Report source delivery, CI acceptance, GitHub publication, host acceptance and independently verified live identity separately. A tag or published release does not prove production activation. Use the read-only `python3 scripts/check_live.py <release manifest.json>` to compare the public site over IPv4 and IPv6.
 - Keep local AI material under indexed, locally excluded `.ai-work/`; inspect worktree state before cleanup. Never discard another task's uncommitted work. Run the available secret checks, preserve hooks and stop on real findings; GitGuardian quota/auth/service failure alone is not a delivery blocker.

@@ -3,7 +3,7 @@
 BADU_PROFILE = (
     'badu-dilla', '05', 'Erykah Badu / J Dilla', 'Choose a part. Explain a choice.',
     'Production &amp; collaboration · first-person account · 2013',
-    'In her 2013 account, Erykah Badu recalled choosing a record and a passage from it. She said producer J Dilla taught her how to sample that passage.',
+    'Erykah Badu recalled picking a record and a passage she wanted from it, then having producer J Dilla teach her how to sample it.',
     'This is Badu’s recollection of a lesson, not a complete account of the recording process. Our activity uses material you create and needs no recording equipment.',
     'Make four short phrases or patterns of your own. Choose one part to repeat. Compare two placements and explain what changes.',
     'Ask a music or drama teacher, mentor or willing listener to compare your choices. You can work alone and keep the choice that fits your idea.',
