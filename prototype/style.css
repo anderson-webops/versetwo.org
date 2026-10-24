@@ -56,6 +56,9 @@ footer a{display:inline-flex;align-items:center;min-height:44px}
 .cards .number{grid-area:num}
 .card-title{grid-area:title;font-size:1.1rem;font-weight:700;line-height:1.3}
 .card-meta{grid-area:meta}
+.card-group h2{margin:0 0 .6rem;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.card-group .cards{margin-bottom:1.75rem}
+main>section.card-group{max-width:none;margin-top:0}
 .home-practice{margin-top:1rem}
 .home-practice h2{margin-bottom:1.25rem}
 
@@ -65,7 +68,9 @@ footer a{display:inline-flex;align-items:center;min-height:44px}
 .index a:hover{border-color:var(--blue);color:var(--blue)}
 .index a[aria-current]{border-color:var(--ink);background:var(--ink);color:var(--surface)}
 .index a[aria-current] .number,.index a[aria-current] .index-meta{color:inherit}
-.activity-nav .index{display:none}
+.activity-nav .index ol{grid-template-columns:repeat(7,minmax(0,1fr));gap:.3rem;margin-bottom:1rem}
+.activity-nav .index a{justify-content:center;padding:.5rem 0}
+.activity-nav .index-name,.activity-nav .index-meta{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .index .number{flex:none;min-width:1.4rem}
 .index-meta{flex:none;margin-left:auto;white-space:nowrap;font-size:.8rem}
 .indexed-body{min-width:0}
@@ -143,7 +148,9 @@ main>section.home-practice{max-width:none}
 @media (min-width:1000px){
  body{font-size:1.125rem}
  .indexed{display:grid;grid-template-columns:16.5rem minmax(0,1fr);gap:2.5rem;align-items:start}
- .index,.activity-nav .index{display:block;position:sticky;top:6rem}
+ .index{position:sticky;top:6rem}
+ .activity-nav .index a{justify-content:flex-start;padding:.55rem .8rem}
+ .activity-nav .index-name,.activity-nav .index-meta{position:static;width:auto;height:auto;overflow:visible;clip-path:none}
  .index ol{display:block;margin:0}
  .index a{border-color:transparent;background:none}
  .index a:hover{background:var(--surface);border-color:var(--line)}

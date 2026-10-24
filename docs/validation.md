@@ -2,6 +2,7 @@
 
 ## October 23, 2026 main v0.1.4 merged into the redesign branch (branch only)
 
+- Glanceable-information follow-up: activity pages now show a compact 01–07 overview on phones (36×44px links with full accessible names), and the home page groups the ten stories five and five. At 320/375px there is no horizontal overflow, and Practice starts at 1,167px on the home page at 375px. `print.html` is still byte-identical to main's.
 - Merge result: 16 pages. Static checks (including both theme palettes, the contents lists and both pager sequences), the version check, all 24 regression tests and `git diff --check` pass.
 - `print.html` is byte-identical to main's. The WeasyPrint 70.0 packet render is pixel-identical at 60 dpi across all 16 pages to main's v0.1.3 PDF, and `check_print_layout.py` passes (16 + 1 pages). The checked-in PDFs are main's, unchanged.
 - Claude desktop browser pane (Chromium), 320 and 375px: no horizontal overflow on Start, Stories, Practice, Your week, Next step, an activity page or `404.html`. Heights after the phone tightening are recorded in `redesign-2026-10-22.md`. Rewritten story text and the 404 page were reviewed visually. This is not a device, zoom or screen-reader audit.

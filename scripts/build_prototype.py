@@ -16,7 +16,7 @@ def pager(file,sequence):
  if i<len(sequence)-1: links+=f'<a class="next" href="{sequence[i+1][0]}"><span>Next</span> {sequence[i+1][1]}</a>'
  return f'<nav class="pager" aria-label="Previous and next page">{links}</nav>'
 def indexed(label,items,body,current=None,cls='indexed'):
- links=''.join(f'<li><a href="{url}"'+(' aria-current="page"' if url==current else '')+f'><span class="number">{num}</span> {name}'+(f' <span class="index-meta">{meta}</span>' if meta else '')+'</a></li>' for url,num,name,meta in items)
+ links=''.join(f'<li><a href="{url}"'+(' aria-current="page"' if url==current else '')+f'><span class="number">{num}</span> <span class="index-name">{name}</span>'+(f' <span class="index-meta">{meta}</span>' if meta else '')+'</a></li>' for url,num,name,meta in items)
  return f'<div class="{cls}"><nav class="index" aria-label="{label}"><ol>{links}</ol></nav><div class="indexed-body">{body}</div></div>'
 def cards(items,ids=None):
  return '<ul class="cards" role="list">'+''.join(f'<li'+(f' id="{ids[i]}"' if ids else '')+f'><a href="{url}"><span class="number">{num}</span> <span class="card-title">{name}</span> <span class="card-meta">{meta}</span></a></li>' for i,(url,num,name,meta) in enumerate(items))+'</ul>'
@@ -87,7 +87,10 @@ story_meta={'black-thought':'Writing · 2021 interview','rapsody':'Revision · 2
 activities=(activity1,activity2,ACTIVITY3,ACTIVITY4,ACTIVITY5,ACTIVITY6,learner_connection(ACTIVITY7))
 activity_data=[activity_summary(a) for a in activities]
 short_names=dict(ACTIVITY_LINKS)
-page('index.html','Start','<h1>Artist stories</h1>'+cards(('stories.html#'+x[0],x[1],x[2],story_meta[x[0]]) for x in profile_data)+'<section class="home-practice"><h2>Practice</h2>'+cards((activity_file(id),num,title,f'{skill} · {minutes}') for id,num,title,skill,minutes in activity_data)+'</section>')
+story_groups=[('Writing and words',('black-thought','gza','little-simz','eminem','lupe-fiasco')),('Sound and preparation',('rapsody','megan','badu-dilla','rakim','doechii'))]
+profiles_by_id={x[0]:x for x in profile_data}
+assert sorted(id for _,ids in story_groups for id in ids)==sorted(profiles_by_id),'every story belongs to exactly one home group'
+page('index.html','Start','<h1>Artist stories</h1>'+''.join(f'<section class="card-group"><h2>{label}</h2>'+cards(('stories.html#'+id,profiles_by_id[id][1],profiles_by_id[id][2],story_meta[id]) for id in ids)+'</section>' for label,ids in story_groups)+'<section class="home-practice"><h2>Practice</h2>'+cards((activity_file(id),num,title,f'{skill} · {minutes}') for id,num,title,skill,minutes in activity_data)+'</section>')
 page('stories.html','Artist stories','<h1>Artist stories</h1>'+indexed('Artist stories',(('#'+x[0],x[1],x[2],'') for x in profile_data),profiles))
 page('practice.html','Practice','<h1>Practice</h1>'+cards([(activity_file(id),num,title,f'{skill} · {minutes}') for id,num,title,skill,minutes in activity_data],[x[0] for x in activity_data]))
 activity_index=[(activity_file(id),num,escape(short_names[id]),minutes) for id,num,title,skill,minutes in activity_data]
