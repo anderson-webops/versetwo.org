@@ -31,5 +31,5 @@ Shared Sites policy (`../AGENTS.md` in the Sites checkout) applies. Keep shared 
 
 - Never SSH, SCP, SFTP, tunnel to, configure access to, or administer production from this checkout. Never activate a release or change live services, configuration, data or release pointers. Protected server-side automation owns deployment.
 - Preserve existing IPv4/IPv6 and all A/AAAA records. DNS, certificates, routing and host ownership remain operator-controlled. The static host contract is a requirement, not evidence of an installed compatible adapter.
-- Report source delivery, CI acceptance, GitHub publication, host acceptance and independently verified live identity separately. A tag or published release does not prove production activation.
+- Report source delivery, CI acceptance, GitHub publication, host acceptance and independently verified live identity separately. A tag or published release does not prove production activation. Use the read-only `python3 scripts/check_live.py <release manifest.json>` to compare the public site over IPv4 and IPv6.
 - Keep local AI material under indexed, locally excluded `.ai-work/`; inspect worktree state before cleanup. Never discard another task's uncommitted work. Run the available secret checks, preserve hooks and stop on real findings; GitGuardian quota/auth/service failure alone is not a delivery blocker.

@@ -15,8 +15,9 @@ def page(file,title,body):
   insertion='<section class="print-section">'
   activity=learner_connection(ACTIVITY7)
   body=body+activity if file=='practice.html' else body.replace(insertion,for_print(activity)+insertion,1)
+ robots='<meta name="robots" content="noindex">' if file=='404.html' else ''
  links=''.join(f'<a href="{u}"'+(' aria-current="page"' if u==file else '')+f'>{t}</a>' for u,t in nav)
- p.joinpath(file).write_text(f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Rap writing, artist process stories and practical learning choices. Free private activities."><meta name="referrer" content="no-referrer"><title>{escape(title)} · Music / Practice</title><link rel="stylesheet" href="style.css"><link rel="icon" type="image/svg+xml" href="favicon.svg"></head><body><a class="skip" href="#main">Skip to content</a><header><a class="wordmark" href="index.html">Music <span>/</span> Practice</a><nav aria-label="Main">{links}</nav></header><main id="main" tabindex="-1">{body}</main>{footer}</body></html>''')
+ p.joinpath(file).write_text(f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Rap writing, artist process stories and practical learning choices. Free private activities."><meta name="referrer" content="no-referrer">{robots}<title>{escape(title)} · Music / Practice</title><link rel="stylesheet" href="style.css"><link rel="icon" type="image/svg+xml" href="favicon.svg"></head><body><a class="skip" href="#main">Skip to content</a><header><a class="wordmark" href="index.html">Music <span>/</span> Practice</a><nav aria-label="Main">{links}</nav></header><main id="main" tabindex="-1">{body}</main>{footer}</body></html>''')
 profile_data=[
  ('black-thought','01','Black Thought','Keep a draft. See what changes.','Drafting · artist interview · 2021',
  'Black Thought said he writes on a computer and in his phone’s notes, and has found old notebooks full of drafts. He also recalled leaving Millersville University and going back to Philadelphia.',
@@ -72,4 +73,5 @@ def for_print(body):
 def embedded(body):
  return body.replace('<h3>','<h4>').replace('</h3>','</h4>').replace('<h2>','<h3>').replace('</h2>','</h3>').replace('<h1>','<h2>').replace('</h1>','</h2>')
 page('print.html','Print and offline packet','<h1>Music practice packet</h1><div class="offline-options"><a class="button secondary" href="music-practice-packet.pdf" download>Save the print PDF</a><p class="quiet">External source websites need internet.</p></div>'+profiles+''.join(for_print(a) for a in (activity1,activity2,ACTIVITY3,ACTIVITY4,ACTIVITY5,ACTIVITY6))+'<section class="print-section">'+embedded(WEEK)+'</section><section class="print-section">'+embedded(support)+'</section><section class="print-section">'+embedded(guide)+'</section>')
-print('Eight static pages generated.')
+page('404.html','Page not found','<h1>Page not found</h1>')
+print('Nine static pages generated.')

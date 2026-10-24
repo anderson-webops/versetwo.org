@@ -1,14 +1,20 @@
 """Release-policy regressions using disposable local Git repositories."""
 
+from functools import partial
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+import json
 from pathlib import Path
 import subprocess
 import sys
+import tarfile
 import tempfile
+import threading
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from build_site import build
+from check_live import check
 from check_release import check_tag, read_version, release_notes
 from smoke_site import smoke
 
@@ -89,9 +95,44 @@ class StaticArtifactSmokeTests(unittest.TestCase):
             version = read_version(ROOT)
             archive = build(ROOT / "prototype", ROOT / "deployment-contract.json", isolated / "build", commit, f"v{version}", version)
             result = smoke(archive, commit, version)
-            self.assertEqual(result["public_files"], 13)
+            self.assertEqual(result["public_files"], 15)
             self.assertEqual(result["isolated_http"], "pass")
             self.assertEqual(result["missing_and_private_paths"], "404")
+
+
+
+class QuietHandler(SimpleHTTPRequestHandler):
+    def log_message(self, *_args):
+        pass
+
+
+class LiveCheckTests(unittest.TestCase):
+    def test_live_check_accepts_exact_files_and_flags_changed_bytes(self):
+        run = ROOT / ".ai-work" / "runs" / "release-tests"
+        run.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=run) as directory:
+            isolated = Path(directory)
+            commit = "b" * 40
+            version = read_version(ROOT)
+            archive = build(ROOT / "prototype", ROOT / "deployment-contract.json", isolated / "build", commit, f"v{version}", version)
+            with tarfile.open(archive, "r:gz") as tar:
+                tar.extractall(isolated / "served", filter="data")
+            manifest = json.loads((isolated / "served" / "manifest.json").read_text())
+            public = isolated / "served" / "public"
+            server = ThreadingHTTPServer(("127.0.0.1", 0), partial(QuietHandler, directory=str(public)))
+            thread = threading.Thread(target=server.serve_forever, daemon=True)
+            thread.start()
+            try:
+                origin = f"http://127.0.0.1:{server.server_port}"
+                self.assertTrue(check(origin, manifest, ("ipv4",))["ok"])
+                (public / "style.css").write_text("/* changed on the host */")
+                result = check(origin, manifest, ("ipv4",))
+                self.assertFalse(result["ok"])
+                self.assertEqual(result["families"]["ipv4"]["mismatched"], ["style.css: bytes differ"])
+            finally:
+                server.shutdown()
+                server.server_close()
+                thread.join(timeout=5)
 
 
 if __name__ == "__main__":

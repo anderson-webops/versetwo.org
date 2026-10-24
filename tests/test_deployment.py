@@ -35,7 +35,13 @@ class DeploymentTests(unittest.TestCase):
     def test_exact_archive_is_reproducible_and_accepted(self):
         first, second = self.build("one"), self.build("two")
         self.assertEqual(first.read_bytes(), second.read_bytes())
-        self.assertEqual(verify(first, COMMIT)["public_files"], 13)
+        self.assertEqual(verify(first, COMMIT)["public_files"], 15)
+
+    def test_release_identity_mirrors_deployment_identity(self):
+        with tarfile.open(self.build(), "r:gz") as tar:
+            release = tar.extractfile("public/release.json").read()
+            self.assertEqual(release, tar.extractfile("public/deployment.json").read())
+            self.assertEqual(json.loads(release)["commit"], COMMIT)
 
     def test_private_or_unknown_material_is_not_published(self):
         (self.source / "private-notes.md").write_text("Private draft, not a site asset")

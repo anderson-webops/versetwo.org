@@ -27,7 +27,7 @@ The workflow artifact and the published `v0.1.0` GitHub release contain:
 - `manifest.json`
 - `deployment-contract.json`
 
-The tar archive contains `public/`, plus its manifest and contract. Only the eight HTML pages, CSS, favicon, two PDFs and generated `deployment.json` are included in `public/`. All site links are relative, allowing the existing host to choose its URL path. There is no CNAME or DNS configuration in this repository.
+The tar archive contains `public/`, plus its manifest and contract. Only these files go into `public/`: the eight HTML pages, the `404.html` not-found page, the CSS, the favicon, the two PDFs, and the generated `deployment.json` and `release.json`. `release.json` is byte-identical to `deployment.json`, so tools that read either name get the same commit, ref and version. The verifier rejects an artifact whose two identity files differ. All site links are relative, allowing the existing host to choose its URL path. There is no CNAME or DNS configuration in this repository.
 
 Research exports, source code, internal notes, outreach drafts, Git metadata, caches and review ZIPs are excluded from the website package. Tracked research, code and notes are visible in the now-public GitHub repository. The independently maintained verifier rejects unexpected archive members, missing pages, symlinks, checksum failures and a different source commit. Serve only the archive's `public/` directory, never the repository root or the full review bundle.
 
@@ -69,6 +69,16 @@ Activation belongs to the protected server-side system. Preserve the previous ac
 After activation, compare the full commit in the served `deployment.json` with the chosen manifest, and compare served HTML/CSS/PDF bytes against the manifest. Check normal navigation and both retained IPv4 and IPv6 paths. HTML, `deployment.json` and the unversioned `style.css` should revalidate rather than receive long immutable cache lifetimes.
 
 Production paths, certificates, DNS, ports and ownership remain server-controlled. Do not alter existing A or AAAA records. This source workflow performs no production shell access, live service/configuration change or deployment. A repository push or release does not establish that the server has activated the site.
+
+## Checking the public site
+
+After the host activates a release, run a read-only check against that release's downloaded `manifest.json`:
+
+```sh
+python3 scripts/check_live.py path/to/manifest.json --origin https://versetwo.org
+```
+
+It fetches every public file over IPv4 and IPv6. It compares page, PDF and asset bytes with the manifest, and compares the identity files by commit and version (the host may record its own ref). It also confirms that a missing path returns 404. A non-zero exit lists each mismatch. The check never changes the host.
 
 ## GitHub verification and historical startup failure
 

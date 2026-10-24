@@ -1,5 +1,5 @@
 {
-  "pages": 8,
+  "pages": 9,
   "local_links_and_fragments": "pass",
   "no_scripts_forms_embeds_or_remote_assets": "pass",
   "single_h1_and_unique_ids": "pass",
@@ -17,8 +17,8 @@
     "#174fc4": 7.11,
     "#bd3e00": 5.45
   },
-  "web_content_bytes": 74111,
+  "web_content_bytes": 75161,
   "print_pdf_bytes": 71700,
   "facilitator_pdf_bytes": 15079,
-  "total_prototype_bytes": 160890
+  "total_prototype_bytes": 161940
 }
