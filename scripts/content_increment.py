@@ -3,7 +3,7 @@
 GZA_PROFILE = (
     'gza', '04', 'GZA', 'Let a question become an idea.',
     'Curiosity · first-person article · 2015',
-    'GZA said science has long been his way of understanding what is around him, and that this curiosity gave him material to write about.',
+    (('Long-time interest', 'Science, to understand what is around him'), ('Became', 'Material to write about')),
     'This is his account of an interest, not a science qualification or proof that one subject makes better music. You can choose a topic that matters to you; no artist gets to decide your taste.',
     'Check one fact about a topic you like. Try two original lines using it. Keep a note of what the source actually supports.',
     'Ask a librarian or subject teacher to help check a reference you want to use in a verse, paragraph or presentation.',

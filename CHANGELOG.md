@@ -1,5 +1,11 @@
 # Releases
 
+## v0.1.5
+
+- Show each artist story as its source and date, followed by two or three labeled fact rows ("Late 2005", "Teacher", "Since kindergarten", and so on) instead of a "said / recalled" paragraph. The rows stay within the checked evidence-register claims.
+- Keep story numbers on one line on phones.
+- Rebuild the tagged 16-page practice packet.
+
 ## v0.1.4
 
 - Serve `/release.json` alongside `/deployment.json`, as the other anderson-webops static sites do. The two files are byte-identical, and the verifier enforces this.

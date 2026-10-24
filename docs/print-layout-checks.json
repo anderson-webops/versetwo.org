@@ -1,7 +1,7 @@
 {
   "packet": {
     "pages": 16,
-    "nonempty_text_boxes": 411,
+    "nonempty_text_boxes": 442,
     "text_within_page_bounds": "pass",
     "resource_schemes": [
       "file",
