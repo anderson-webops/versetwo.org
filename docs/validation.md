@@ -1,5 +1,12 @@
 # Validation record
 
+## October 23, 2026 artist account rewrite (v0.1.3)
+
+Jacob said the artist accounts had the right idea but meandered. All ten were rewritten to lead with the practice and drop the repeated "In a 20XX interview" openers. Dates and publishers remain on the eyebrow and source line. Each paraphrase stays within its evidence-register claim (BT1–2, RP1–2, MG1–2, GZ1, EB1–2, LS1–2, EM1, RK1–2, LF1–2, DC1–2).
+
+- Rechecked the original sources on October 23. CBS: "used to read the dictionary" is Anderson Cooper's phrasing; Eminem's answer was about wanting words at his disposal, so the account no longer states that he read it. The Believer: Rakim said he had played instruments since kindergarten, learned jazz timing from his brother at a community center and brought Coltrane's playing into his delivery. The Paris Review and Johns Hopkins pages returned HTTP 403, so those two accounts were not rechecked. Their wording stays within the previously inspected BT and LF claims.
+- WeasyPrint 70.0, tagged, file/data resources only: the packet is still 16 Letter pages, and 411/40 nonempty text boxes are within page bounds. All pages were visually reviewed. Matching copies are in `prototype/` and `output/pdf/`. The facilitator outline is unchanged.
+
 ## October 20, 2026 copy cleanup
 
 Jacob requested retaining only substantive content, necessary operation/navigation and essential accessibility/safety/legal text, and explicitly authorized committing, tagging and releasing the combined copy review. This supersedes the local-only delivery restriction in the historical October 17 entry below.

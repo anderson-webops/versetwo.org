@@ -1,5 +1,13 @@
 # Releases
 
+## v0.1.3
+
+- Rewrite all ten artist accounts so each opens with what the artist did or learned, in fewer words. Dates and publishers stay on each story's eyebrow and source line.
+- The Eminem account now matches the CBS interview: reading the dictionary was Anderson Cooper's question, and Eminem's answer was about wanting words at his disposal.
+- Rebuild the tagged 16-page practice packet. The facilitator outline is unchanged.
+
+Production activation remains with the protected server-side system.
+
 ## v0.1.2
 
 - Remove repeated framing, motivational takeaways, generic onboarding and interface commentary across all eight pages.
