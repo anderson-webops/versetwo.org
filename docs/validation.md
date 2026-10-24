@@ -4,7 +4,8 @@
 
 Jacob found the "said / recalled" story openings vague. Each story now shows its source and date first, then two or three labeled rows. The wording stays within the BT, RP, MG, GZ, EB, LS, EM, RK, LF and DC register claims. No verbatim artist quotes were added: The Paris Review and Johns Hopkins sources still return HTTP 403 to automated fetching, and the other pages were only read through a summarizer, so exact wording could not be verified.
 
-- Regeneration, static checks, the version check, all 22 regression tests and `git diff --check` pass.
+- After Jacob asked for summaries that get straight to the point, the rows were shortened to the decisive words. A longer narrative would belong only on a separate per-artist page.
+- Python 3.15.0 (Homebrew): regeneration, static checks, the version check, all 22 regression tests and `git diff --check` pass. The shell's default `/usr/bin/python3` is 3.9.6, below the declared 3.13. It fails the two artifact tests because `tarfile` lacks the `filter` argument there, so that is an interpreter problem, not a code regression. Use Python 3.13 or newer.
 - WeasyPrint 70.0, tagged, file/data resources only: the packet is still 16 Letter pages, `check_print_layout.py` passes, and all pages were visually reviewed. Matching copies are in `prototype/` and `output/pdf/`.
 - Browser pane at 1280 and 375px: the rows read as a two-column list on desktop and stacked label/value pairs on phones, with no horizontal overflow. Story numbers no longer split across lines on phones.
 

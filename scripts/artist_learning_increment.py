@@ -4,7 +4,7 @@ NEW_PROFILES = (
     (
         'eminem', '07', 'Eminem', 'Give yourself more words to choose from.',
         'Vocabulary & sound · artist interview · 2010',
-        (('Asked about', 'Reading the dictionary'), ('His aim', 'All of those words at his disposal'), ('Showed', 'Making words rhyme by changing how he pronounces them')),
+        (('Asked about', 'Reading the dictionary'), ('Wanted', 'All of those words at his disposal'), ('Showed', 'Rhyming by changing pronunciation')),
         'Studying words can mean noticing their meaning and sound. This historical account does not establish a current daily routine or formal study of linguistics. Longer or rarer words are not automatically better choices.',
         'Choose an ordinary word. Find another meaning or a word with a similar sound. Write two original lines, then keep the wording that fits your idea.',
         'Try your own word notebook, a dictionary from a library, or a conversation with a language or music teacher. Ask what changes in meaning and sound between two choices.',
@@ -14,7 +14,7 @@ NEW_PROFILES = (
     (
         'rakim', '08', 'Rakim', 'Listen for something you can change.',
         'Rhythm & listening · artist interview · 2020',
-        (('Since kindergarten', 'Playing instruments'), ('Community center', 'Jazz timing, taught by his brother'), ('Influence', 'John Coltrane’s saxophone playing, worked into his rap delivery')),
+        (('Since kindergarten', 'Playing instruments'), ('Community center', 'Jazz timing, taught by his brother'), ('Influence', 'Coltrane’s saxophone, in his rap delivery')),
         'He connected earlier music learning with later choices about rhythm and space. You can explore a pause or a pattern without owning an instrument or copying another artist’s words.',
         'Tap four steady beats. Speak an original sentence twice, changing where you pause. Or mark pauses on paper and imagine the difference. Which version suits the sentence?',
         'Ask a music teacher, community tutor or willing collaborator to help you hear or mark one rhythm. A poetry or drama activity can also be a place to try pauses.',
@@ -24,7 +24,7 @@ NEW_PROFILES = (
     (
         'lupe-fiasco', '09', 'Lupe Fiasco', 'Make a specific part of the craft learnable.',
         'Peer learning & technique · artist interview · 2025',
-        (('High school', 'Traded verses and feedback with other rappers'), ('Later taught', 'Rap technique, through the Society of Spoken Art'), ('Brought in', 'Linguistics and communication theory for experienced rappers')),
+        (('High school', 'Traded verses and feedback with rappers'), ('Later taught', 'Rap technique, Society of Spoken Art'), ('Taught rappers', 'Linguistics and communication theory')),
         'Linguistics studies how language works. Sounds, meanings and how people communicate can be things to investigate in your own writing. His teaching roles are not evidence of an earned university degree, and you do not need a university place to try a small experiment.',
         'Pick one question: Does this word have two meanings? Where does the important sound land? Ask a willing listener what they notice, or compare two versions privately.',
         'Choose one question for a writing group, library resource, teacher or music mentor. Ask for help with that specific choice rather than a judgment of your whole piece.',
@@ -34,7 +34,7 @@ NEW_PROFILES = (
     (
         'doechii', '10', 'Doechii', 'Practice can include a whole performance.',
         'Music learning & rehearsal · artist interview · 2023',
-        (('High school', 'Performing arts: chorus, writing music, music theory'), ('2023 Coachella', 'Rehearsed with her band and dancers every day for two weeks')),
+        (('Arts high school', 'Chorus, writing music, music theory'), ('2023 Coachella', 'Two weeks of daily band and dance rehearsal')),
         'This is her account of one education experience and one show. It offers a look at preparation, not a timetable you need to match. A short, comfortable rehearsal can focus on one choice.',
         'Use two original lines or the invented practice example. Try a clear pause in one version and a different emphasis in another. You can work silently on paper; recording and performing are optional.',
         'Try a chorus, music or drama class, an established community program, or a willing collaborator. Ask for feedback on one part, such as the pace or a pause.',
